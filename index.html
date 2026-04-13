@@ -135,6 +135,10 @@
       background: #f0f4ff;
     }
 
+    .material-link.locked {
+      cursor: pointer;
+    }
+
     .material-link small {
       display: block;
       margin-top: 3px;
@@ -342,13 +346,14 @@
 
   <div id="intro">
     <h1 style="font-weight: 900; font-size: 2rem; margin-bottom: 5px;">ИГРА: «ПОЗИТИВНО ПОДКРЕПИСЬ»</h1>
-    <span class="author-badge">Автор: Янусов Дима</span>
+    <span class="author-badge">Автор исследовательской работы, сайта и викторины: Янусов Дима</span>
     <span class="author-details">учащийся 4 "Г" класса<br>Гимназии №1 г. Новополоцка</span>
     <div class="intro-content">
       <p style="font-size: 1.1rem; font-weight: 600;">Внимательно изучи правила, чтобы не пропустить джекпот!</p>
       <p class="research-note">
-        Викторина создана по мотивам исследовательской работы Димы о позитивном подкреплении, языке тела собак и добром воспитании щенка.
+        Эта викторина сделана по материалам исследовательской работы о позитивном подкреплении, языке тела собак и добром воспитании щенка.
       </p>
+      <div class="warning-tape"><span>🧀 ГЛАВНЫЙ ПРИЗ: СЫРНЫЙ ДЖЕКПОТ! 🧀</span></div>
       <div class="rules-list">
         <div class="rule-item"><div class="rule-num">1</div><div><b>Подготовьтесь:</b> внимательно прочитайте вопрос на экране.</div></div>
         <div class="rule-item"><div class="rule-num">2</div><div><b>Реагируйте:</b> нажмите на правильный вариант ответа.</div></div>
@@ -361,11 +366,11 @@
             Памятка «5 правил»
             <small>Короткая подсказка по доброму общению с собакой.</small>
           </a>
-          <a class="material-link" href="game-positive-reinforcement.pdf" target="_blank">
+          <a class="material-link locked" href="#" onclick="showConferenceMessage(event)">
             Презентация исследовательской работы
-            <small>Материалы Димы о позитивном подкреплении и воспитании щенка.</small>
+            <small>Вот уж нетерпеливые дождитесь сначала конференции.</small>
           </a>
-          <a class="material-link" href="presentation-quiz.pptx" target="_blank">
+          <a class="material-link" href="presentation-quiz-compressed.pptx" target="_blank">
             Презентация с вопросами для показа
             <small>Формат PowerPoint для удобного проведения викторины на экране.</small>
           </a>
@@ -376,7 +381,6 @@
         </div>
       </div>
     </div>
-    <div class="warning-tape"><span>🧀 ГЛАВНЫЙ ПРИЗ: СЫРНЫЙ ДЖЕКПОТ! 🧀</span></div>
     <button class="btn" onclick="startQuiz()">Начать игру! 🚀</button>
   </div>
 
@@ -414,8 +418,8 @@
   const resultTiers = [
     { min: 0, max: 10, img: "leya-belarusian.jpg", prize: "🎁 Награда: Похвала!", prizeImg: "prize-praise.png", prizeAlt: "Похвала", text: "«Гав! Молодец! Дима видит, как ты старался. Я, Лея, тоже вижу старания... но пока не чувствую запаха сыра. Давай поднажмем!»" },
     { min: 11, max: 30, img: "leya-noticed-something.jpg", prize: "🎁 Награда: Корминка! 🦴", prizeImg: "prize-kibble.png", prizeAlt: "Корминка", text: "«Уже лучше, человек! Лови заслуженную корминку. Ты на правильном пути к пониманию пушистых. Хвост Леи одобрительно виляет!»" },
-    { min: 31, max: 50, img: "leya-running.jpg", prize: "🎁 Награда на выбор: утиная нарезка, лососевые облачка или кроличьи колечки!", prizeImg: "prize-choice-treats.png", prizeAlt: "Награда на выбор", text: "«Вуф! Хороший результат! Ты начинаешь считывать сигналы примирения. Еще немного, и мы станем идеальной стаей!»" },
-    { min: 51, max: 70, img: "leya-birthday.jpg", prize: "🎁 Награда: Кроличьи колечки! 🐇", prizeImg: "prize-rabbit-rings.png", prizeAlt: "Кроличьи колечки", text: "«Отлично! Мой пушистый радар показывает, что ты почти эксперт. Забирай свои колечки!»" },
+    { min: 31, max: 50, img: "leya-running.jpg", prize: "🎁 Награда: Утиная нарезка! 🦆", prizeImg: "prize-choice-treats.png", prizeAlt: "Утиная нарезка", text: "«Вуф! Хороший результат! Ты начинаешь считывать сигналы примирения. Утиная нарезка — отличный стимул двигаться дальше!»" },
+    { min: 51, max: 70, img: "leya-birthday.jpg", prize: "🎁 Награда: Куриные колечки! 🐔", prizeImg: "prize-chicken-rings.png", prizeAlt: "Куриные колечки", text: "«Отлично! Мой пушистый радар показывает, что ты почти эксперт. Забирай свои куриные колечки!»" },
     { min: 71, max: 90, img: "leya-village-hill.jpg", prize: "🎁 Награда: Лососевые облачка! 🐟☁️", prizeImg: "prize-salmon-clouds.png", prizeAlt: "Лососевые облачка", text: "«Вау! Потрясающе! Ты почти профи в психологии собак и считывании сигналов примирения. Лосось — твой!»" },
     { min: 91, max: 99, img: "leya-village-hill.jpg", prize: "🎁 Награда: Кусочек сыра! 🧀", prizeImg: "prize-cheese-piece.png", prizeAlt: "Кусочек сыра", text: "«Восхитительно! Ты почти идеал. До абсолютного сырного джекпота не хватило совсем чуть-чуть!»" },
     { min: 100, max: 100, img: "leya-village-hill.jpg", prize: "🏆🏆 ДЖЕКПОТ: СЫРНАЯ ЖМЕНЬКА! 🧀🧀🧀🏆🏆", prizeImg: "prize-cheese-jackpot.png", prizeAlt: "Горка сыра", text: "«АБСОЛЮТНАЯ ПОБЕДА! Ты точно знаешь, как сделать собаку счастливой и послушной. Дима Янусов подтверждает: ты — ТОП!»" }
@@ -424,6 +428,11 @@
   let current = 0;
   let score = 0;
   const mainImg = document.getElementById('main-img');
+
+  function showConferenceMessage(event) {
+    event.preventDefault();
+    alert('Вот уж нетерпеливые дождитесь сначала конференции');
+  }
 
   function startQuiz() {
     document.getElementById('intro').classList.add('hidden');
