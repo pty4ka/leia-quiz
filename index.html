@@ -60,6 +60,10 @@
       transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    .photo-container img.loading {
+      opacity: 0;
+    }
+
     .intro-content {
       background: #f9f9f9;
       padding: 25px;
@@ -346,7 +350,7 @@
 
   <div id="intro">
     <h1 style="font-weight: 900; font-size: 2rem; margin-bottom: 5px;">ИГРА: «ПОЗИТИВНО ПОДКРЕПИСЬ»</h1>
-    <span class="author-badge">Автор исследовательской работы, сайта и викторины: Янусов Дима</span>
+    <span class="author-badge">Автор исследовательской работы и викторины: Янусов Дима</span>
     <span class="author-details">учащийся 4 "Г" класса<br>Гимназии №1 г. Новополоцка</span>
     <div class="intro-content">
       <p style="font-size: 1.1rem; font-weight: 600;">Внимательно изучи правила, чтобы не пропустить джекпот!</p>
@@ -429,6 +433,43 @@
   let score = 0;
   const mainImg = document.getElementById('main-img');
 
+  function preloadImages() {
+    const imageSources = [
+      ...questions.map((question) => question.img),
+      ...resultTiers.map((tier) => tier.img),
+      ...resultTiers.map((tier) => tier.prizeImg),
+      "leya-belarusian.jpg"
+    ];
+
+    [...new Set(imageSources)].forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }
+
+  function setMainImage(src, alt) {
+    if (mainImg.getAttribute('src') === src) {
+      mainImg.alt = alt;
+      mainImg.classList.remove('loading');
+      return;
+    }
+
+    mainImg.classList.add('loading');
+
+    const nextImage = new Image();
+    nextImage.onload = () => {
+      mainImg.src = src;
+      mainImg.alt = alt;
+      requestAnimationFrame(() => mainImg.classList.remove('loading'));
+    };
+    nextImage.onerror = () => {
+      mainImg.src = src;
+      mainImg.alt = alt;
+      mainImg.classList.remove('loading');
+    };
+    nextImage.src = src;
+  }
+
   function showConferenceMessage(event) {
     event.preventDefault();
     alert('Вот уж нетерпеливые дождитесь сначала конференции');
@@ -443,8 +484,7 @@
   function showQuestion() {
     const data = questions[current];
     document.getElementById('q-title').innerText = data.q;
-    mainImg.src = data.img;
-    mainImg.alt = `Лея: вопрос ${current + 1}`;
+    setMainImage(data.img, `Лея: вопрос ${current + 1}`);
     const container = document.getElementById('options-container');
     container.innerHTML = '';
     document.getElementById('expl-box').style.display = 'none';
@@ -494,14 +534,15 @@
     const perc = Math.round((score / questions.length) * 100);
     const pie = document.getElementById('pie');
     const tier = resultTiers.find((item) => perc >= item.min && perc <= item.max);
-    mainImg.src = "leya-birthday.jpg";
-    mainImg.alt = "Лея празднует результат";
+    setMainImage("leya-birthday.jpg", "Лея празднует результат");
     document.getElementById('perc-text').innerText = `${perc}%`;
     pie.style.background = `conic-gradient(var(--success) ${perc}%, var(--error) ${perc}%)`;
     document.getElementById('score-summary').innerHTML = `Ты ответил правильно на <b>${score}</b> из ${questions.length} вопросов!`;
     document.getElementById('prize-box').innerHTML = `${tier.prize}<img class="prize-img" src="${tier.prizeImg}" alt="${tier.prizeAlt}">`;
     document.getElementById('motivation-text').innerHTML = tier.text;
   }
+
+  preloadImages();
 </script>
 
 </body>
