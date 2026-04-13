@@ -517,6 +517,10 @@
     expBox.innerHTML = `<strong>Объяснение:</strong><br>${data.explanations[idx]}`;
     expBox.style.display = 'block';
     document.getElementById('next-btn').classList.remove('hidden');
+
+    setTimeout(() => {
+      expBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
   }
 
   document.getElementById('next-btn').onclick = () => {
