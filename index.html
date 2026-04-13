@@ -35,6 +35,19 @@
       padding: 18px;
     }
 
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.32;
+      background:
+        linear-gradient(90deg, transparent 0 96%, rgba(92, 76, 52, 0.08) 96% 97%, transparent 97%),
+        linear-gradient(0deg, transparent 0 96%, rgba(92, 76, 52, 0.06) 96% 97%, transparent 97%);
+      background-size: 54px 54px;
+      mix-blend-mode: multiply;
+    }
+
     .quiz-card {
       width: min(100%, 1120px);
       margin: 0 auto;
@@ -54,6 +67,21 @@
       position: absolute;
       inset: 10px;
       border: 1px dashed rgba(92, 76, 52, 0.17);
+      pointer-events: none;
+    }
+
+    .quiz-card::after {
+      content: "✦";
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      width: 64px;
+      height: 64px;
+      color: rgba(139, 61, 51, 0.55);
+      font-size: 34px;
+      line-height: 64px;
+      text-align: center;
+      transform: rotate(12deg);
       pointer-events: none;
     }
 
@@ -96,6 +124,20 @@
       background: var(--tape);
       box-shadow: 0 2px 5px rgba(72, 55, 37, 0.12);
       z-index: 2;
+    }
+
+    .photo-container::after {
+      content: attr(data-caption);
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%) rotate(1.5deg);
+      z-index: 3;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     .photo-container img {
@@ -188,6 +230,41 @@
 
     .warning-tape span { display: inline-block; }
 
+    .info-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .info-card {
+      min-height: 74px;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(255, 252, 239, 0.9);
+      box-shadow: 0 5px 12px rgba(72, 55, 37, 0.08);
+      border-left: 7px solid var(--clay);
+    }
+
+    .info-card:nth-child(2) { border-left-color: var(--green-dark); }
+    .info-card:nth-child(3) { border-left-color: var(--accent); }
+
+    .info-card strong {
+      display: block;
+      font-size: 1.35rem;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .info-card span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
     .rules-list {
       margin-top: 14px;
       display: grid;
@@ -268,6 +345,20 @@
       display: grid;
       gap: 9px;
       margin-top: 14px;
+    }
+
+    .quiz-kicker {
+      display: inline-block;
+      align-self: flex-start;
+      margin-bottom: 10px;
+      padding: 7px 12px;
+      background: rgba(217, 162, 139, 0.55);
+      border-radius: 8px;
+      color: var(--clay-dark);
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .option {
@@ -416,6 +507,8 @@
       h1 { font-size: 1.45rem !important; }
       .intro-content { padding: 12px; }
       .materials-list { grid-template-columns: 1fr; }
+      .info-strip { grid-template-columns: 1fr; }
+      .info-card { min-height: 0; }
       .option { padding: 14px; }
       #prize-box { font-size: 1.08rem; padding: 14px; }
     }
@@ -433,6 +526,7 @@
       .option,
       .explanation { font-size: 0.9rem; }
       .warning-tape { padding: 8px 8px 8px 14px; letter-spacing: 0; }
+      .photo-container::after { font-size: 0.72rem; }
       .chart-container { width: 112px; height: 112px; margin: 12px auto; }
       .pie-chart::after { width: 78px; height: 78px; }
       .chart-text { font-size: 1.3rem; }
@@ -445,7 +539,7 @@
 
 <div class="quiz-card">
   <div id="intro" class="screen-grid">
-    <div class="photo-container hero-photo"><img id="main-img" src="leya-belarusian.jpg" alt="Лея"></div>
+    <div class="photo-container hero-photo" data-caption="Лея, главный эксперт"><img id="main-img" src="leya-belarusian.jpg" alt="Лея"></div>
     <div class="content-panel">
       <h1 style="font-weight: 900; font-size: 2rem; margin: 0 0 5px;">ИГРА: «ПОЗИТИВНО ПОДКРЕПИСЬ»</h1>
       <span class="author-badge">Автор исследовательской работы и викторины: Янусов Дима</span>
@@ -456,6 +550,11 @@
           Эта викторина сделана по материалам исследовательской работы о позитивном подкреплении, языке тела собак и добром воспитании щенка.
         </p>
         <div class="warning-tape"><span>🧀 ГЛАВНЫЙ ПРИЗ: СЫРНЫЙ ДЖЕКПОТ! 🧀</span></div>
+        <div class="info-strip">
+          <div class="info-card"><strong>10</strong><span>вопросов по материалам работы</span></div>
+          <div class="info-card"><strong>7</strong><span>уровней вкусных наград</span></div>
+          <div class="info-card"><strong>100%</strong><span>сырная жменька для знатока</span></div>
+        </div>
         <div class="rules-list">
           <div class="rule-item"><div class="rule-num">1</div><div><b>Подготовьтесь:</b> внимательно прочитайте вопрос на экране.</div></div>
           <div class="rule-item"><div class="rule-num">2</div><div><b>Реагируйте:</b> нажмите на правильный вариант ответа.</div></div>
@@ -488,8 +587,9 @@
   </div>
 
   <div id="quiz" class="screen-grid hidden">
-    <div class="photo-container quiz-photo"><img id="quiz-img" src="leya-with-decoration.jpg" alt="Лея"></div>
+    <div class="photo-container quiz-photo" data-caption="Карточка вопроса"><img id="quiz-img" src="leya-with-decoration.jpg" alt="Лея"></div>
     <div class="content-panel">
+      <div class="quiz-kicker" id="quiz-kicker">Карточка 1 из 10</div>
       <h3 id="q-title" style="text-align: left; font-size: 1.15rem; margin: 0 0 14px;"></h3>
       <div id="options-container" class="options-grid"></div>
       <div id="expl-box" class="explanation"></div>
@@ -498,7 +598,7 @@
   </div>
 
   <div id="results" class="screen-grid hidden">
-    <div class="photo-container result-photo"><img id="result-img" src="leya-birthday.jpg" alt="Лея празднует результат"></div>
+    <div class="photo-container result-photo" data-caption="Финальный снимок"><img id="result-img" src="leya-birthday.jpg" alt="Лея празднует результат"></div>
     <div class="content-panel">
       <h1 style="font-size: 2rem; margin: 0;">Викторина окончена! 🎉</h1>
       <div class="chart-container"><div id="pie" class="pie-chart"><span class="chart-text" id="perc-text">0%</span></div></div>
@@ -539,6 +639,7 @@
   let score = 0;
   const quizImg = document.getElementById('quiz-img');
   const resultImg = document.getElementById('result-img');
+  const quizKicker = document.getElementById('quiz-kicker');
 
   function preloadImages() {
     const imageSources = [
@@ -592,6 +693,8 @@
     const data = questions[current];
     document.getElementById('q-title').innerText = data.q;
     setImage(quizImg, data.img, `Лея: вопрос ${current + 1}`);
+    quizImg.parentElement.dataset.caption = `Вопрос ${current + 1} / ${questions.length}`;
+    quizKicker.textContent = `Карточка ${current + 1} из ${questions.length}`;
     const container = document.getElementById('options-container');
     container.innerHTML = '';
     document.getElementById('expl-box').style.display = 'none';
