@@ -7,56 +7,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1a2044;
-      --accent: #fceb3b;
-      --success: #8cc63f;
-      --error: #e63946;
-      --bg-color: #fdf6e3;
-      --bg-pattern: radial-gradient(#e9dac1 1px, transparent 1px);
+      --ink: #182033;
+      --muted: #606a7b;
+      --paper: #fffdfa;
+      --panel: #f6f8fb;
+      --line: #dfe5ef;
+      --accent: #f4d03f;
+      --accent-dark: #1a2044;
+      --success: #3c9f72;
+      --error: #d84a4a;
     }
 
     body {
       font-family: 'Montserrat', 'Segoe UI', Tahoma, sans-serif;
-      background-color: var(--bg-color);
-      background-image: var(--bg-pattern);
-      background-size: 30px 30px;
+      background:
+        linear-gradient(135deg, rgba(244, 208, 63, 0.16), transparent 34%),
+        linear-gradient(315deg, rgba(60, 159, 114, 0.12), transparent 30%),
+        #eef2f7;
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      color: var(--primary);
-      padding: 10px;
+      color: var(--ink);
+      padding: 18px;
       box-sizing: border-box;
     }
 
     .quiz-card {
-      background: white;
+      background: var(--paper);
       width: 100%;
-      max-width: 1080px;
+      max-width: 1120px;
       border-radius: 8px;
-      padding: 18px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      box-shadow: 0 24px 70px rgba(24, 32, 51, 0.16);
       text-align: center;
       box-sizing: border-box;
-      display: grid;
-      grid-template-columns: minmax(280px, 42%) minmax(0, 1fr);
-      gap: 22px;
-      align-items: start;
+      border: 1px solid rgba(24, 32, 51, 0.08);
     }
 
     .photo-container {
       width: 100%;
-      height: min(72vh, 540px);
+      height: 100%;
+      min-height: 0;
       border-radius: 8px;
       overflow: hidden;
       margin-bottom: 0;
-      border: 4px solid white;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      background: linear-gradient(135deg, #fffdf0, #f0f4ff);
+      border: 1px solid var(--line);
+      background: #f9fbff;
       box-sizing: border-box;
-      position: sticky;
-      top: 12px;
     }
 
     .photo-container img {
@@ -73,21 +72,44 @@
       text-align: center;
     }
 
+    .screen-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 40%) minmax(0, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-photo {
+      min-height: 560px;
+    }
+
+    .quiz-photo,
+    .result-photo {
+      min-height: 520px;
+    }
+
+    .content-panel {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
     .photo-container img.loading {
       opacity: 0;
     }
 
     .intro-content {
-      background: #f9f9f9;
+      background: var(--panel);
       padding: 14px;
       border-radius: 8px;
       margin: 12px 0 0;
-      border: 1px solid #eee;
+      border: 1px solid var(--line);
     }
 
     .author-badge {
       font-weight: 700;
-      color: #555;
+      color: var(--muted);
       font-size: 0.88rem;
       margin-top: 6px;
       display: block;
@@ -96,7 +118,7 @@
     .author-details {
       display: block;
       margin-top: 4px;
-      color: #555;
+      color: var(--muted);
       font-size: 0.88rem;
       font-weight: 600;
       line-height: 1.4;
@@ -109,7 +131,7 @@
 
     .research-note {
       margin: 10px 0 0;
-      color: #333;
+      color: var(--ink);
       font-size: 0.96rem;
       line-height: 1.45;
     }
@@ -117,7 +139,7 @@
     .materials-block {
       margin-top: 12px;
       padding: 12px;
-      background: #fffdf0;
+      background: #fff9d8;
       border: 2px solid var(--accent);
       border-radius: 8px;
       text-align: left;
@@ -126,7 +148,7 @@
     .materials-title {
       margin: 0 0 10px;
       font-weight: 900;
-      color: var(--primary);
+      color: var(--ink);
     }
 
     .materials-list {
@@ -138,9 +160,9 @@
     .material-link {
       display: block;
       padding: 10px 12px;
-      border: 2px solid #eee;
+      border: 1px solid var(--line);
       border-radius: 8px;
-      color: var(--primary);
+      color: var(--ink);
       background: white;
       text-decoration: none;
       font-weight: 700;
@@ -149,7 +171,7 @@
     }
 
     .material-link:hover {
-      border-color: var(--primary);
+      border-color: var(--accent-dark);
       background: #f0f4ff;
     }
 
@@ -185,8 +207,8 @@
     }
 
     .warning-tape {
-      background: repeating-linear-gradient(45deg, #fceb3b, #fceb3b 10px, #1a2044 10px, #1a2044 20px);
-      color: var(--primary);
+      background: repeating-linear-gradient(45deg, var(--accent), var(--accent) 10px, var(--accent-dark) 10px, var(--accent-dark) 20px);
+      color: var(--ink);
       padding: 12px;
       font-weight: bold;
       border-radius: 8px;
@@ -212,7 +234,7 @@
 
     .option {
       background: white;
-      border: 2px solid #eee;
+      border: 1px solid var(--line);
       padding: 14px 16px;
       border-radius: 8px;
       cursor: pointer;
@@ -221,12 +243,12 @@
       font-size: 0.95rem;
       line-height: 1.42;
       font-weight: 500;
-      color: var(--primary);
+      color: var(--ink);
       font-family: inherit;
     }
 
     .option:hover:not(:disabled) {
-      border-color: var(--primary);
+      border-color: var(--accent-dark);
       background: #f0f4ff;
       transform: scale(1.01);
     }
@@ -250,7 +272,7 @@
       padding: 16px;
       border-radius: 8px;
       background: #f0f9f8;
-      border-left: 8px solid var(--primary);
+      border-left: 8px solid var(--accent-dark);
       text-align: left;
       line-height: 1.6;
       font-size: 0.95rem;
@@ -293,11 +315,11 @@
       z-index: 10;
       font-weight: 900;
       font-size: 1.65rem;
-      color: var(--primary);
+      color: var(--ink);
     }
 
     .btn {
-      background: var(--primary);
+      background: var(--accent-dark);
       color: white;
       border: none;
       padding: 14px 24px;
@@ -347,15 +369,28 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 760px) {
       .quiz-card {
-        display: block;
         padding: 12px;
+      }
+      .screen-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
       }
       .photo-container {
         height: 220px;
-        margin-bottom: 12px;
-        position: static;
+        min-height: 0;
+      }
+      .hero-photo,
+      .quiz-photo,
+      .result-photo {
+        min-height: 0;
+      }
+      .content-panel {
+        text-align: center;
+      }
+      #q-title {
+        text-align: left !important;
       }
       h1 { font-size: 1.45rem !important; }
       .intro-content { padding: 12px; }
@@ -363,67 +398,136 @@
       #prize-box { font-size: 1.15rem; padding: 18px; }
       .materials-list { grid-template-columns: 1fr; }
     }
+
+    @media (max-width: 420px) {
+      body {
+        padding: 8px;
+        align-items: flex-start;
+      }
+
+      .quiz-card {
+        padding: 10px;
+      }
+
+      .photo-container {
+        height: 185px;
+      }
+
+      h1 {
+        font-size: 1.25rem !important;
+      }
+
+      .author-badge,
+      .author-details,
+      .research-note,
+      .rule-item,
+      .material-link,
+      .option,
+      .explanation {
+        font-size: 0.9rem;
+      }
+
+      .warning-tape {
+        padding: 8px;
+        letter-spacing: 0;
+      }
+
+      .warning-tape span {
+        padding: 7px 10px;
+      }
+
+      .chart-container {
+        width: 118px;
+        height: 118px;
+        margin: 12px auto;
+      }
+
+      .pie-chart::after {
+        width: 82px;
+        height: 82px;
+      }
+
+      .chart-text {
+        font-size: 1.35rem;
+      }
+
+      .prize-img {
+        width: min(100%, 190px);
+      }
+
+      .btn {
+        padding: 13px 18px;
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
 
 <div class="quiz-card">
-  <div class="photo-container"><img id="main-img" src="leya-belarusian.jpg" alt="Лея"></div>
-
-  <div id="intro">
-    <h1 style="font-weight: 900; font-size: 2rem; margin-bottom: 5px;">ИГРА: «ПОЗИТИВНО ПОДКРЕПИСЬ»</h1>
-    <span class="author-badge">Автор исследовательской работы и викторины: Янусов Дима</span>
-    <span class="author-details">учащийся 4 "Г" класса<br>Гимназии №1 г. Новополоцка</span>
-    <div class="intro-content">
-      <p style="font-size: 1.1rem; font-weight: 600;">Внимательно изучи правила, чтобы не пропустить джекпот!</p>
-      <p class="research-note">
-        Эта викторина сделана по материалам исследовательской работы о позитивном подкреплении, языке тела собак и добром воспитании щенка.
-      </p>
-      <div class="warning-tape"><span>🧀 ГЛАВНЫЙ ПРИЗ: СЫРНЫЙ ДЖЕКПОТ! 🧀</span></div>
-      <div class="rules-list">
-        <div class="rule-item"><div class="rule-num">1</div><div><b>Подготовьтесь:</b> внимательно прочитайте вопрос на экране.</div></div>
-        <div class="rule-item"><div class="rule-num">2</div><div><b>Реагируйте:</b> нажмите на правильный вариант ответа.</div></div>
-        <div class="rule-item"><div class="rule-num">3</div><div><b>Подкрепитесь:</b> получите лакомство за отличный результат!</div></div>
-      </div>
-      <div class="materials-block">
-        <p class="materials-title">Материалы к игре</p>
-        <div class="materials-list">
-          <a class="material-link" href="rules-5.png" target="_blank">
-            Памятка «5 правил»
-            <small>Короткая подсказка по доброму общению с собакой.</small>
-          </a>
-          <a class="material-link locked" href="#" onclick="showConferenceMessage(event)">
-            Презентация исследовательской работы
-            <small>Вот уж нетерпеливые дождитесь сначала конференции.</small>
-          </a>
-          <a class="material-link" href="presentation-quiz-compressed.pptx" target="_blank">
-            Презентация с вопросами для показа
-            <small>Формат PowerPoint для удобного проведения викторины на экране.</small>
-          </a>
-          <a class="material-link" href="prototype-cards.png" target="_blank">
-            Материалы для офлайн-игры
-            <small>Прототип табличек для проведения игры без компьютера.</small>
-          </a>
+  <div id="intro" class="screen-grid">
+    <div class="photo-container hero-photo"><img id="main-img" src="leya-belarusian.jpg" alt="Лея"></div>
+    <div class="content-panel">
+      <h1 style="font-weight: 900; font-size: 2rem; margin: 0 0 5px;">ИГРА: «ПОЗИТИВНО ПОДКРЕПИСЬ»</h1>
+      <span class="author-badge">Автор исследовательской работы и викторины: Янусов Дима</span>
+      <span class="author-details">учащийся 4 "Г" класса<br>Гимназии №1 г. Новополоцка</span>
+      <div class="intro-content">
+        <p style="font-size: 1.1rem; font-weight: 600; margin: 0;">Внимательно изучи правила, чтобы не пропустить джекпот!</p>
+        <p class="research-note">
+          Эта викторина сделана по материалам исследовательской работы о позитивном подкреплении, языке тела собак и добром воспитании щенка.
+        </p>
+        <div class="warning-tape"><span>🧀 ГЛАВНЫЙ ПРИЗ: СЫРНЫЙ ДЖЕКПОТ! 🧀</span></div>
+        <div class="rules-list">
+          <div class="rule-item"><div class="rule-num">1</div><div><b>Подготовьтесь:</b> внимательно прочитайте вопрос на экране.</div></div>
+          <div class="rule-item"><div class="rule-num">2</div><div><b>Реагируйте:</b> нажмите на правильный вариант ответа.</div></div>
+          <div class="rule-item"><div class="rule-num">3</div><div><b>Подкрепитесь:</b> получите лакомство за отличный результат!</div></div>
+        </div>
+        <div class="materials-block">
+          <p class="materials-title">Материалы к игре</p>
+          <div class="materials-list">
+            <a class="material-link" href="rules-5.png" target="_blank">
+              Памятка «5 правил»
+              <small>Короткая подсказка по доброму общению с собакой.</small>
+            </a>
+            <a class="material-link locked" href="#" onclick="showConferenceMessage(event)">
+              Презентация исследовательской работы
+              <small>Вот уж нетерпеливые дождитесь сначала конференции.</small>
+            </a>
+            <a class="material-link" href="presentation-quiz-compressed.pptx" target="_blank">
+              Презентация с вопросами для показа
+              <small>Формат PowerPoint для удобного проведения викторины на экране.</small>
+            </a>
+            <a class="material-link" href="prototype-cards.png" target="_blank">
+              Материалы для офлайн-игры
+              <small>Прототип табличек для проведения игры без компьютера.</small>
+            </a>
+          </div>
         </div>
       </div>
+      <button class="btn" onclick="startQuiz()">Начать игру! 🚀</button>
     </div>
-    <button class="btn" onclick="startQuiz()">Начать игру! 🚀</button>
   </div>
 
-  <div id="quiz" class="hidden">
-    <h3 id="q-title" style="text-align: left; font-size: 1.15rem; margin-bottom: 20px; min-height: 70px;"></h3>
-    <div id="options-container" class="options-grid"></div>
-    <div id="expl-box" class="explanation"></div>
-    <button id="next-btn" class="btn hidden">Понятно, дальше! 🐾</button>
+  <div id="quiz" class="screen-grid hidden">
+    <div class="photo-container quiz-photo"><img id="quiz-img" src="leya-with-decoration.jpg" alt="Лея"></div>
+    <div class="content-panel">
+      <h3 id="q-title" style="text-align: left; font-size: 1.15rem; margin: 0 0 14px;"></h3>
+      <div id="options-container" class="options-grid"></div>
+      <div id="expl-box" class="explanation"></div>
+      <button id="next-btn" class="btn hidden">Понятно, дальше! 🐾</button>
+    </div>
   </div>
 
-  <div id="results" class="hidden">
-    <h1 style="font-size: 2rem;">Викторина окончена! 🎉</h1>
-    <div class="chart-container"><div id="pie" class="pie-chart"><span class="chart-text" id="perc-text">0%</span></div></div>
-    <h2 id="score-summary" style="margin: 10px 0;"></h2>
-    <div id="prize-box"></div>
-    <p id="motivation-text" style="margin-top: 20px; color: #444; font-style: italic; font-size: 1.05rem; line-height: 1.6;"></p>
-    <button class="btn" onclick="location.reload()">Сыграть ещё раз 🔄</button>
+  <div id="results" class="screen-grid hidden">
+    <div class="photo-container result-photo"><img id="result-img" src="leya-birthday.jpg" alt="Лея празднует результат"></div>
+    <div class="content-panel">
+      <h1 style="font-size: 2rem; margin: 0;">Викторина окончена! 🎉</h1>
+      <div class="chart-container"><div id="pie" class="pie-chart"><span class="chart-text" id="perc-text">0%</span></div></div>
+      <h2 id="score-summary" style="margin: 8px 0 12px;"></h2>
+      <div id="prize-box"></div>
+      <p id="motivation-text" style="margin-top: 16px; color: #444; font-style: italic; font-size: 1.05rem; line-height: 1.55;"></p>
+      <button class="btn" onclick="location.reload()">Сыграть ещё раз 🔄</button>
+    </div>
   </div>
 </div>
 
@@ -454,7 +558,8 @@
 
   let current = 0;
   let score = 0;
-  const mainImg = document.getElementById('main-img');
+  const quizImg = document.getElementById('quiz-img');
+  const resultImg = document.getElementById('result-img');
 
   function preloadImages() {
     const imageSources = [
@@ -470,25 +575,25 @@
     });
   }
 
-  function setMainImage(src, alt) {
-    if (mainImg.getAttribute('src') === src) {
-      mainImg.alt = alt;
-      mainImg.classList.remove('loading');
+  function setImage(imageElement, src, alt) {
+    if (imageElement.getAttribute('src') === src) {
+      imageElement.alt = alt;
+      imageElement.classList.remove('loading');
       return;
     }
 
-    mainImg.classList.add('loading');
+    imageElement.classList.add('loading');
 
     const nextImage = new Image();
     nextImage.onload = () => {
-      mainImg.src = src;
-      mainImg.alt = alt;
-      requestAnimationFrame(() => mainImg.classList.remove('loading'));
+      imageElement.src = src;
+      imageElement.alt = alt;
+      requestAnimationFrame(() => imageElement.classList.remove('loading'));
     };
     nextImage.onerror = () => {
-      mainImg.src = src;
-      mainImg.alt = alt;
-      mainImg.classList.remove('loading');
+      imageElement.src = src;
+      imageElement.alt = alt;
+      imageElement.classList.remove('loading');
     };
     nextImage.src = src;
   }
@@ -507,7 +612,7 @@
   function showQuestion() {
     const data = questions[current];
     document.getElementById('q-title').innerText = data.q;
-    setMainImage(data.img, `Лея: вопрос ${current + 1}`);
+    setImage(quizImg, data.img, `Лея: вопрос ${current + 1}`);
     const container = document.getElementById('options-container');
     container.innerHTML = '';
     document.getElementById('expl-box').style.display = 'none';
@@ -561,7 +666,7 @@
     const perc = Math.round((score / questions.length) * 100);
     const pie = document.getElementById('pie');
     const tier = resultTiers.find((item) => perc >= item.min && perc <= item.max);
-    setMainImage("leya-birthday.jpg", "Лея празднует результат");
+    setImage(resultImg, "leya-birthday.jpg", "Лея празднует результат");
     document.getElementById('perc-text').innerText = `${perc}%`;
     pie.style.background = `conic-gradient(var(--success) ${perc}%, var(--error) ${perc}%)`;
     document.getElementById('score-summary').innerHTML = `Ты ответил правильно на <b>${score}</b> из ${questions.length} вопросов!`;
