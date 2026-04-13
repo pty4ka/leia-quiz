@@ -33,31 +33,44 @@
     .quiz-card {
       background: white;
       width: 100%;
-      max-width: 850px;
+      max-width: 1080px;
       border-radius: 8px;
-      padding: 18px 22px;
+      padding: 18px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
       text-align: center;
       box-sizing: border-box;
+      display: grid;
+      grid-template-columns: minmax(280px, 42%) minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
     }
 
     .photo-container {
       width: 100%;
-      height: clamp(180px, 30vh, 260px);
+      height: min(72vh, 540px);
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 14px;
+      margin-bottom: 0;
       border: 4px solid white;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      background: #f9f9f9;
+      background: linear-gradient(135deg, #fffdf0, #f0f4ff);
       box-sizing: border-box;
+      position: sticky;
+      top: 12px;
     }
 
     .photo-container img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #intro,
+    #quiz,
+    #results {
+      min-width: 0;
+      text-align: center;
     }
 
     .photo-container img.loading {
@@ -66,9 +79,9 @@
 
     .intro-content {
       background: #f9f9f9;
-      padding: 16px 18px;
+      padding: 14px;
       border-radius: 8px;
-      margin: 14px 0 0;
+      margin: 12px 0 0;
       border: 1px solid #eee;
     }
 
@@ -95,15 +108,15 @@
     }
 
     .research-note {
-      margin: 12px 0 0;
+      margin: 10px 0 0;
       color: #333;
-      font-size: 1rem;
-      line-height: 1.55;
+      font-size: 0.96rem;
+      line-height: 1.45;
     }
 
     .materials-block {
-      margin-top: 14px;
-      padding: 14px;
+      margin-top: 12px;
+      padding: 12px;
       background: #fffdf0;
       border: 2px solid var(--accent);
       border-radius: 8px;
@@ -118,7 +131,7 @@
 
     .materials-list {
       display: grid;
-      gap: 10px;
+      gap: 8px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -155,7 +168,7 @@
       display: flex;
       align-items: center;
       gap: 15px;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       font-size: 0.92rem;
     }
 
@@ -177,7 +190,7 @@
       padding: 12px;
       font-weight: bold;
       border-radius: 8px;
-      margin-top: 14px;
+      margin-top: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -193,20 +206,20 @@
 
     .options-grid {
       display: grid;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 9px;
+      margin-top: 14px;
     }
 
     .option {
       background: white;
       border: 2px solid #eee;
-      padding: 18px;
+      padding: 14px 16px;
       border-radius: 8px;
       cursor: pointer;
       text-align: left;
       transition: 0.3s;
       font-size: 0.95rem;
-      line-height: 1.5;
+      line-height: 1.42;
       font-weight: 500;
       color: var(--primary);
       font-family: inherit;
@@ -233,8 +246,8 @@
 
     .explanation {
       display: none;
-      margin-top: 20px;
-      padding: 25px;
+      margin-top: 14px;
+      padding: 16px;
       border-radius: 8px;
       background: #f0f9f8;
       border-left: 8px solid var(--primary);
@@ -246,9 +259,9 @@
 
     .chart-container {
       position: relative;
-      width: 180px;
-      height: 180px;
-      margin: 25px auto;
+      width: 140px;
+      height: 140px;
+      margin: 16px auto;
       transition: transform 0.5s;
     }
 
@@ -269,8 +282,8 @@
     .pie-chart::after {
       content: "";
       position: absolute;
-      width: 130px;
-      height: 130px;
+      width: 98px;
+      height: 98px;
       background: white;
       border-radius: 50%;
     }
@@ -279,7 +292,7 @@
       position: relative;
       z-index: 10;
       font-weight: 900;
-      font-size: 2rem;
+      font-size: 1.65rem;
       color: var(--primary);
     }
 
@@ -287,12 +300,12 @@
       background: var(--primary);
       color: white;
       border: none;
-      padding: 15px 28px;
+      padding: 14px 24px;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
       width: 100%;
-      font-size: 1.2rem;
+      font-size: 1.05rem;
       margin-top: 16px;
       transition: 0.3s;
       box-shadow: 0 10px 20px rgba(26, 32, 68, 0.2);
@@ -309,19 +322,19 @@
     }
 
     #prize-box {
-      padding: 25px;
+      padding: 16px;
       border: 4px solid var(--accent);
       border-radius: 8px;
       background: #fffdf0;
       font-weight: 800;
-      font-size: 1.4rem;
+      font-size: 1.18rem;
       line-height: 1.35;
     }
 
     .prize-img {
       display: block;
-      width: min(100%, 300px);
-      margin: 16px auto 0;
+      width: min(100%, 230px);
+      margin: 12px auto 0;
       border-radius: 8px;
     }
 
@@ -335,10 +348,17 @@
     }
 
     @media (max-width: 560px) {
-      .quiz-card { padding: 15px; }
-      .photo-container { height: 210px; }
+      .quiz-card {
+        display: block;
+        padding: 12px;
+      }
+      .photo-container {
+        height: 220px;
+        margin-bottom: 12px;
+        position: static;
+      }
       h1 { font-size: 1.45rem !important; }
-      .intro-content { padding: 18px; }
+      .intro-content { padding: 12px; }
       .option { padding: 14px; }
       #prize-box { font-size: 1.15rem; padding: 18px; }
       .materials-list { grid-template-columns: 1fr; }
@@ -422,7 +442,8 @@
   ];
 
   const resultTiers = [
-    { min: 0, max: 10, img: "leya-belarusian.jpg", prize: "🎁 Награда: Похвала!", prizeImg: "prize-praise.png", prizeAlt: "Похвала", text: "«Гав! Молодец! Дима видит, как ты старался. Я, Лея, тоже вижу старания... но пока не чувствую запаха сыра. Давай поднажмем!»" },
+    { min: 0, max: 0, img: "leya-belarusian.jpg", prize: "Без награды... пока!", prizeImg: "prize-praise.png", prizeAlt: "Попробуй ещё раз", text: "«Я сделаю вид, что ничего не было. Такое бывает! Нажимай “Сыграть ещё раз” и попробуй забрать хотя бы корминку.»" },
+    { min: 1, max: 10, img: "leya-belarusian.jpg", prize: "🎁 Награда: Похвала!", prizeImg: "prize-praise.png", prizeAlt: "Похвала", text: "«Вот уже лучше! Пока сыра не чувствую, но попытка засчитана. Попробуй ещё раз — корминка уже где-то рядом.»" },
     { min: 11, max: 30, img: "leya-noticed-something.jpg", prize: "🎁 Награда: Корминка! 🦴", prizeImg: "prize-kibble.png", prizeAlt: "Корминка", text: "«Уже лучше, человек! Лови заслуженную корминку. Ты на правильном пути к пониманию пушистых. Хвост Леи одобрительно виляет!»" },
     { min: 31, max: 50, img: "leya-running.jpg", prize: "🎁 Награда: Утиная нарезка! 🦆", prizeImg: "prize-choice-treats.png", prizeAlt: "Утиная нарезка", text: "«Вуф! Хороший результат! Ты начинаешь считывать сигналы примирения. Утиная нарезка — отличный стимул двигаться дальше!»" },
     { min: 51, max: 70, img: "leya-birthday.jpg", prize: "🎁 Награда: Куриные колечки! 🐔", prizeImg: "prize-chicken-rings.png", prizeAlt: "Куриные колечки", text: "«Отлично! Мой пушистый радар показывает, что ты почти эксперт. Забирай свои куриные колечки!»" },
