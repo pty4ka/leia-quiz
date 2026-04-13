@@ -90,6 +90,58 @@
       margin-top: 20px;
     }
 
+    .research-note {
+      margin: 18px 0 0;
+      color: #333;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .materials-block {
+      margin-top: 20px;
+      padding: 18px;
+      background: #fffdf0;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .materials-title {
+      margin: 0 0 12px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .materials-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .material-link {
+      display: block;
+      padding: 12px 14px;
+      border: 2px solid #eee;
+      border-radius: 8px;
+      color: var(--primary);
+      background: white;
+      text-decoration: none;
+      font-weight: 700;
+      line-height: 1.35;
+      transition: 0.25s;
+    }
+
+    .material-link:hover {
+      border-color: var(--primary);
+      background: #f0f4ff;
+    }
+
+    .material-link small {
+      display: block;
+      margin-top: 3px;
+      color: #555;
+      font-weight: 500;
+    }
+
     .rule-item {
       display: flex;
       align-items: center;
@@ -294,10 +346,34 @@
     <span class="author-details">учащийся 4 "Г" класса<br>Гимназии №1 г. Новополоцка</span>
     <div class="intro-content">
       <p style="font-size: 1.1rem; font-weight: 600;">Внимательно изучи правила, чтобы не пропустить джекпот!</p>
+      <p class="research-note">
+        Викторина создана по мотивам исследовательской работы Димы о позитивном подкреплении, языке тела собак и добром воспитании щенка.
+      </p>
       <div class="rules-list">
         <div class="rule-item"><div class="rule-num">1</div><div><b>Подготовьтесь:</b> внимательно прочитайте вопрос на экране.</div></div>
         <div class="rule-item"><div class="rule-num">2</div><div><b>Реагируйте:</b> нажмите на правильный вариант ответа.</div></div>
         <div class="rule-item"><div class="rule-num">3</div><div><b>Подкрепитесь:</b> получите лакомство за отличный результат!</div></div>
+      </div>
+      <div class="materials-block">
+        <p class="materials-title">Материалы к игре</p>
+        <div class="materials-list">
+          <a class="material-link" href="rules-5.png" target="_blank">
+            Памятка «5 правил»
+            <small>Короткая подсказка по доброму общению с собакой.</small>
+          </a>
+          <a class="material-link" href="game-positive-reinforcement.pdf" target="_blank">
+            Презентация исследовательской работы
+            <small>Материалы Димы о позитивном подкреплении и воспитании щенка.</small>
+          </a>
+          <a class="material-link" href="presentation-quiz.pptx" target="_blank">
+            Презентация с вопросами для показа
+            <small>Формат PowerPoint для удобного проведения викторины на экране.</small>
+          </a>
+          <a class="material-link" href="prototype-cards.png" target="_blank">
+            Материалы для офлайн-игры
+            <small>Прототип табличек для проведения игры без компьютера.</small>
+          </a>
+        </div>
       </div>
     </div>
     <div class="warning-tape"><span>🧀 ГЛАВНЫЙ ПРИЗ: СЫРНЫЙ ДЖЕКПОТ! 🧀</span></div>
