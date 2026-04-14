@@ -58,8 +58,10 @@
       width: min(100%, 1120px);
       margin: 0 auto;
       background:
+        var(--paper-texture),
         linear-gradient(rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.08)),
         var(--paper);
+      background-size: 34px 34px, 42px 42px, auto, auto;
       border: 1px solid rgba(92, 76, 52, 0.22);
       border-radius: 8px;
       padding: clamp(14px, 2.2vw, 26px);
@@ -113,7 +115,7 @@
     #q-title {
       position: relative;
       margin: 0 0 14px !important;
-      padding: 18px 20px;
+      padding: 18px 18px 18px 72px;
       min-height: 0 !important;
       background:
         var(--paper-texture),
@@ -123,6 +125,24 @@
       border-left: 8px solid var(--accent);
       box-shadow: 0 8px 18px rgba(72, 55, 37, 0.12);
       line-height: 1.35;
+    }
+
+    #q-title::before {
+      content: "?";
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      width: 38px;
+      height: 38px;
+      transform: translateY(-50%) rotate(-6deg);
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 900;
+      box-shadow: 0 4px 8px rgba(72, 55, 37, 0.16);
     }
 
     #q-title::after {
@@ -230,9 +250,7 @@
     .intro-content {
       margin-top: 14px;
       padding: 18px;
-      background:
-        var(--paper-texture),
-        var(--paper-light);
+      background: var(--paper-light);
     }
 
     .intro-content::before,
@@ -282,7 +300,6 @@
       padding: 10px;
       border-radius: 8px;
       background: rgba(255, 252, 239, 0.9);
-      background-image: var(--paper-texture);
       box-shadow: 0 5px 12px rgba(72, 55, 37, 0.08);
       border-left: 7px solid var(--clay);
     }
@@ -338,9 +355,6 @@
       margin-top: 16px;
       padding: 14px;
       background: rgba(205, 223, 189, 0.72);
-      background-image:
-        var(--paper-texture),
-        linear-gradient(rgba(205, 223, 189, 0.72), rgba(205, 223, 189, 0.72));
       border-radius: 8px;
       text-align: left;
       box-shadow: 0 8px 16px rgba(72, 55, 37, 0.10);
@@ -363,7 +377,6 @@
       padding: 10px 12px;
       color: var(--ink);
       background: rgba(255, 252, 239, 0.94);
-      background-image: var(--paper-texture);
       border: 1px solid rgba(61, 107, 79, 0.25);
       border-radius: 8px;
       text-decoration: none;
@@ -444,9 +457,6 @@
       margin-top: 16px;
       padding: 17px;
       background: rgba(205, 223, 189, 0.78);
-      background-image:
-        var(--paper-texture),
-        linear-gradient(rgba(205, 223, 189, 0.78), rgba(205, 223, 189, 0.78));
       border-left: 8px solid var(--green-dark);
       text-align: left;
       line-height: 1.6;
@@ -517,9 +527,6 @@
     #prize-box {
       padding: 16px;
       background: rgba(255, 249, 216, 0.95);
-      background-image:
-        var(--paper-texture),
-        linear-gradient(rgba(255, 249, 216, 0.95), rgba(255, 249, 216, 0.95));
       font-weight: 900;
       font-size: 1.16rem;
       line-height: 1.35;
@@ -618,7 +625,12 @@
       body { padding: 8px; }
       .quiz-card { padding: 10px; }
       .photo-container img { height: 190px; }
-      #q-title { padding: 14px; }
+      #q-title { padding: 54px 14px 14px; }
+      #q-title::before {
+        top: 12px;
+        left: 14px;
+        transform: rotate(-6deg);
+      }
       h1 { font-size: 1.25rem !important; }
       .author-badge,
       .author-details,
