@@ -393,6 +393,28 @@
       grid-column: 1 / -1;
     }
 
+    .material-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .material-action {
+      padding: 7px 8px;
+      border-radius: 8px;
+      background: rgba(61, 107, 79, 0.11);
+      color: var(--green-dark);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .material-action:hover {
+      background: rgba(61, 107, 79, 0.18);
+    }
+
     .material-link small {
       display: block;
       margin-top: 2px;
@@ -686,18 +708,18 @@
               Презентация исследовательской работы
               <small>Вот уж нетерпеливые дождитесь сначала конференции.</small>
             </a>
-            <a class="material-link" href="presentation-quiz-compressed.pptx" target="_blank">
-              Презентация для офлайн-игры
-              <small>Вопросы для показа на экране.</small>
-            </a>
             <a class="material-link" href="rules-5.png" target="_blank">
               Памятка «5 правил»
               <small>Короткая подсказка по доброму общению с собакой.</small>
             </a>
-            <a class="material-link" href="prototype-cards.png" target="_blank">
-              Таблички для офлайн-игры
-              <small>Карточки для проведения игры без компьютера.</small>
-            </a>
+            <div class="material-link">
+              Материалы для офлайн-игры
+              <small>Для проведения викторины без запуска сайта.</small>
+              <div class="material-actions">
+                <a class="material-action" href="presentation-quiz-compressed.pptx" target="_blank">Презентация</a>
+                <a class="material-action" href="prototype-cards.png" target="_blank">Таблички</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
