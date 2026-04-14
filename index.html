@@ -389,6 +389,10 @@
 
     .material-link.locked { cursor: pointer; }
 
+    .material-link.wide {
+      grid-column: 1 / -1;
+    }
+
     .material-link small {
       display: block;
       margin-top: 2px;
@@ -677,6 +681,10 @@
             <a class="material-link" href="Янусов Дмитрий_ Метод позитивного подкрепления в воспитании собак.pdf" target="_blank">
               Исследовательская работа
               <small>PDF-документ с полным текстом работы.</small>
+            </a>
+            <a class="material-link locked" href="#" onclick="showConferenceMessage(event)">
+              Презентация исследовательской работы
+              <small>Вот уж нетерпеливые дождитесь сначала конференции.</small>
             </a>
             <a class="material-link" href="presentation-quiz-compressed.pptx" target="_blank">
               Презентация для офлайн-игры
