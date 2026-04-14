@@ -1,924 +1,371 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Викторина: Позитивно подкрепись!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Викторина: Позитивно подкрепись!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-    :root {
-      --ink: #171717;
-      --muted: #57524a;
-      --paper: #f6f0df;
-      --paper-light: rgba(255, 252, 239, 0.93);
-      --green: #cddfbd;
-      --green-dark: #3d6b4f;
-      --clay: #d9a28b;
-      --clay-dark: #8b3d33;
-      --tape: rgba(222, 214, 176, 0.76);
-      --accent: #f2df61;
-      --success: #5f9c55;
-      --error: #c45a4d;
-      --paper-texture:
-        radial-gradient(circle at 18% 20%, rgba(116, 94, 58, 0.10) 0 1px, transparent 1.4px),
-        radial-gradient(circle at 76% 32%, rgba(116, 94, 58, 0.08) 0 1px, transparent 1.3px),
-        radial-gradient(circle at 36% 74%, rgba(255, 255, 255, 0.65) 0 1px, transparent 1.5px),
-        linear-gradient(100deg, rgba(255,255,255,0.42), rgba(255,255,255,0.08) 42%, rgba(119,88,48,0.08));
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      font-family: 'Montserrat', 'Segoe UI', Tahoma, sans-serif;
-      background:
-        radial-gradient(rgba(23, 23, 23, 0.06) 1px, transparent 1.4px),
-        radial-gradient(rgba(92, 76, 52, 0.045) 1px, transparent 1.6px),
-        linear-gradient(135deg, #fbf7eb 0%, #eee2ca 100%);
-      background-size: 18px 18px, 54px 54px, auto;
-      margin: 0;
-      min-height: 100vh;
-      color: var(--ink);
-      padding: 18px;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.32;
-      background:
-        linear-gradient(90deg, transparent 0 96%, rgba(92, 76, 52, 0.08) 96% 97%, transparent 97%),
-        linear-gradient(0deg, transparent 0 96%, rgba(92, 76, 52, 0.06) 96% 97%, transparent 97%);
-      background-size: 54px 54px;
-      mix-blend-mode: multiply;
-    }
-
-    .quiz-card {
-      width: min(100%, 1120px);
-      margin: 0 auto;
-      background:
-        var(--paper-texture),
-        linear-gradient(rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.08)),
-        var(--paper);
-      background-size: 34px 34px, 42px 42px, auto, auto;
-      border: 1px solid rgba(92, 76, 52, 0.22);
-      border-radius: 8px;
-      padding: clamp(14px, 2.2vw, 26px);
-      box-shadow: 0 26px 70px rgba(72, 55, 37, 0.24);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quiz-card::before {
-      content: "";
-      position: absolute;
-      inset: 10px;
-      border: 1px dashed rgba(92, 76, 52, 0.17);
-      pointer-events: none;
-    }
-
-    .quiz-card::after {
-      content: "✦";
-      position: absolute;
-      right: 18px;
-      top: 18px;
-      width: 64px;
-      height: 64px;
-      color: rgba(139, 61, 51, 0.55);
-      font-size: 34px;
-      line-height: 64px;
-      text-align: center;
-      transform: rotate(12deg);
-      pointer-events: none;
-    }
-
-    .screen-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(220px, 30%);
-      gap: clamp(16px, 3vw, 34px);
-      align-items: center;
-      min-height: min(680px, calc(100vh - 80px));
-    }
-
-    .content-panel {
-      order: 1;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-width: 0;
-    }
-
-    #q-title {
-      position: relative;
-      margin: 0 0 14px !important;
-      padding: 18px 18px 18px 72px;
-      min-height: 0 !important;
-      background:
-        var(--paper-texture),
-        linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.20)),
-        var(--paper-light);
-      border-radius: 8px;
-      border-left: 8px solid var(--accent);
-      box-shadow: 0 8px 18px rgba(72, 55, 37, 0.12);
-      line-height: 1.35;
-    }
-
-    #q-title::before {
-      content: "?";
-      position: absolute;
-      left: 18px;
-      top: 50%;
-      width: 38px;
-      height: 38px;
-      transform: translateY(-50%) rotate(-6deg);
-      border-radius: 50%;
-      background: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      font-weight: 900;
-      box-shadow: 0 4px 8px rgba(72, 55, 37, 0.16);
-    }
-
-    #q-title::after {
-      content: "";
-      position: absolute;
-      top: -10px;
-      right: 28px;
-      width: 76px;
-      height: 20px;
-      transform: rotate(2deg);
-      background: var(--tape);
-      box-shadow: 0 2px 5px rgba(72, 55, 37, 0.10);
-    }
-
-    .photo-container {
-      order: 2;
-      min-height: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      width: min(100%, 300px);
-      justify-self: center;
-    }
-
-    .photo-container::before {
-      content: "";
-      position: absolute;
-      top: -11px;
-      left: 50%;
-      width: 92px;
-      height: 24px;
-      transform: translateX(-50%) rotate(-3deg);
-      background: var(--tape);
-      box-shadow: 0 2px 5px rgba(72, 55, 37, 0.12);
-      z-index: 2;
-    }
-
-    .photo-container::after {
-      content: attr(data-caption);
-      position: absolute;
-      left: 50%;
-      bottom: 10px;
-      transform: translateX(-50%) rotate(1.5deg);
-      z-index: 3;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-    }
-
-    .photo-container img {
-      width: 100%;
-      height: clamp(260px, 52vh, 430px);
-      object-fit: cover;
-      object-position: center;
-      border-radius: 3px;
-      padding: 10px 10px 34px;
-      background: #fff;
-      box-shadow: 0 16px 34px rgba(72, 55, 37, 0.24);
-      transform: rotate(1.5deg);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    .hero-photo img { object-position: center 38%; }
-    .quiz-photo img { object-position: center 42%; }
-    .result-photo img { object-position: center 40%; }
-
-    .quiz-photo img { transform: rotate(-1deg); }
-    .result-photo img { transform: rotate(1deg); }
-    .photo-container img.loading { opacity: 0; }
-
-    h1 {
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: 0;
-    }
-
-    .author-badge {
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 800;
-    }
-
-    .author-details {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 600;
-      line-height: 1.4;
-    }
-
-    .intro-content,
-    .explanation,
-    #prize-box {
-      position: relative;
-      border-radius: 8px;
-      box-shadow: 0 8px 18px rgba(72, 55, 37, 0.12);
-    }
-
-    .intro-content {
-      margin-top: 14px;
-      padding: 18px;
-      background: var(--paper-light);
-    }
-
-    .intro-content::before,
-    .materials-block::before,
-    .explanation::before {
-      content: "";
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      width: 86px;
-      height: 23px;
-      transform: translateX(-50%) rotate(-2deg);
-      background: var(--tape);
-      box-shadow: 0 2px 5px rgba(72, 55, 37, 0.10);
-    }
-
-    .research-note {
-      margin: 10px 0 0;
-      color: var(--ink);
-      font-size: 0.98rem;
-      line-height: 1.5;
-    }
-
-    .warning-tape {
-      margin-top: 14px;
-      padding: 12px 14px 12px 20px;
-      color: var(--ink);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      background: linear-gradient(90deg, var(--accent), #fff4a4);
-      border-radius: 8px;
-      box-shadow: inset 8px 0 0 var(--clay-dark), 0 8px 16px rgba(72, 55, 37, 0.12);
-    }
-
-    .warning-tape span { display: inline-block; }
-
-    .info-strip {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .info-card {
-      min-height: 74px;
-      padding: 10px;
-      border-radius: 8px;
-      background: rgba(255, 252, 239, 0.9);
-      box-shadow: 0 5px 12px rgba(72, 55, 37, 0.08);
-      border-left: 7px solid var(--clay);
-    }
-
-    .info-card:nth-child(2) { border-left-color: var(--green-dark); }
-    .info-card:nth-child(3) { border-left-color: var(--accent); }
-
-    .info-card strong {
-      display: block;
-      font-size: 1.35rem;
-      line-height: 1;
-      font-weight: 900;
-    }
-
-    .info-card span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      line-height: 1.25;
-      font-weight: 700;
-    }
-
-    .rules-list {
-      margin-top: 14px;
-      display: grid;
-      gap: 8px;
-      text-align: left;
-    }
-
-    .rule-item {
-      display: grid;
-      grid-template-columns: 32px 1fr;
-      gap: 12px;
-      align-items: center;
-      font-size: 0.94rem;
-    }
-
-    .rule-num {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      box-shadow: 0 4px 8px rgba(72, 55, 37, 0.12);
-    }
-
-    .materials-block {
-      position: relative;
-      margin-top: 16px;
-      padding: 14px;
-      background: rgba(205, 223, 189, 0.72);
-      border-radius: 8px;
-      text-align: left;
-      box-shadow: 0 8px 16px rgba(72, 55, 37, 0.10);
-    }
-
-    .materials-title {
-      margin: 0 0 10px;
-      color: var(--green-dark);
-      font-weight: 900;
-    }
-
-    .materials-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .material-link {
-      display: block;
-      padding: 10px 12px;
-      color: var(--ink);
-      background: rgba(255, 252, 239, 0.94);
-      border: 1px solid rgba(61, 107, 79, 0.25);
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 800;
-      line-height: 1.35;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .material-link:hover {
-      background: #fff;
-      transform: translateY(-1px);
-    }
-
-    .material-link.locked { cursor: pointer; }
-
-    .material-link small {
-      display: block;
-      margin-top: 2px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .options-grid {
-      display: grid;
-      gap: 9px;
-      margin-top: 14px;
-    }
-
-    .quiz-kicker {
-      display: inline-block;
-      align-self: flex-start;
-      margin-bottom: 10px;
-      padding: 7px 12px;
-      background: rgba(217, 162, 139, 0.55);
-      border-radius: 8px;
-      color: var(--clay-dark);
-      font-size: 0.82rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .option {
-      width: 100%;
-      padding: 14px 16px;
-      background: var(--paper-light);
-      border: none;
-      border-radius: 8px;
-      color: var(--ink);
-      text-align: left;
-      font-family: inherit;
-      font-size: 0.96rem;
-      line-height: 1.42;
-      font-weight: 650;
-      cursor: pointer;
-      box-shadow: 0 5px 12px rgba(72, 55, 37, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .option:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(72, 55, 37, 0.16);
-    }
-
-    .option.correct {
-      background: var(--success) !important;
-      color: white;
-    }
-
-    .option.wrong {
-      background: var(--error) !important;
-      color: white;
-      opacity: 0.9;
-    }
-
-    .explanation {
-      display: none;
-      margin-top: 16px;
-      padding: 17px;
-      background: rgba(205, 223, 189, 0.78);
-      border-left: 8px solid var(--green-dark);
-      text-align: left;
-      line-height: 1.6;
-      font-size: 0.95rem;
-      animation: slideUp 0.5s;
-    }
-
-    .chart-container {
-      position: relative;
-      width: 132px;
-      height: 132px;
-      margin: 16px auto;
-      transition: transform 0.5s;
-    }
-
-    .chart-container:hover { transform: scale(1.05); }
-
-    .pie-chart {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 20px rgba(72, 55, 37, 0.12);
-    }
-
-    .pie-chart::after {
-      content: "";
-      position: absolute;
-      width: 92px;
-      height: 92px;
-      background: var(--paper-light);
-      border-radius: 50%;
-    }
-
-    .chart-text {
-      position: relative;
-      z-index: 10;
-      font-weight: 900;
-      font-size: 1.55rem;
-      color: var(--ink);
-    }
-
-    .btn {
-      width: 100%;
-      margin-top: 16px;
-      padding: 14px 24px;
-      background: var(--ink);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-family: inherit;
-      font-weight: 900;
-      font-size: 1.05rem;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(72, 55, 37, 0.20);
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .btn:hover {
-      background: #2a2a2a;
-      transform: translateY(-2px);
-    }
-
-    #next-btn { background: var(--green-dark); }
-
-    #prize-box {
-      padding: 16px;
-      background: rgba(255, 249, 216, 0.95);
-      font-weight: 900;
-      font-size: 1.16rem;
-      line-height: 1.35;
-    }
-
-    .prize-img {
-      display: block;
-      width: min(100%, 220px);
-      margin: 12px auto 0;
-      border-radius: 8px;
-    }
-
-    .hidden { display: none !important; }
-
-    .jackpot-burst {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .jackpot-spark {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--spark-color, var(--accent));
-      box-shadow: 0 0 14px var(--spark-color, var(--accent));
-      animation: jackpotSpark 1.25s ease-out forwards;
-      transform: translate(-50%, -50%);
-    }
-
-    .jackpot-spark.cheese {
-      width: 18px;
-      height: 12px;
-      border-radius: 3px;
-      box-shadow: 0 0 10px rgba(242, 223, 97, 0.9);
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes jackpotSpark {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(0.25) rotate(0deg);
-      }
-      78% { opacity: 1; }
-      100% {
-        opacity: 0;
-        transform:
-          translate(calc(-50% + var(--spark-x)), calc(-50% + var(--spark-y)))
-          scale(1)
-          rotate(var(--spark-rotate));
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .jackpot-spark { animation-duration: 0.01ms; }
-    }
-
-    @media (max-width: 760px) {
-      body { padding: 10px; }
-      .quiz-card { padding: 12px; }
-      .screen-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        min-height: 0;
-      }
-      .content-panel { text-align: center; }
-      .photo-container {
-        order: 1;
-        width: min(100%, 260px);
-      }
-      .content-panel { order: 2; }
-      .photo-container img {
-        height: 230px;
-        padding: 8px 8px 28px;
-      }
-      #q-title { text-align: left !important; }
-      h1 { font-size: 1.45rem !important; }
-      .intro-content { padding: 12px; }
-      .materials-list { grid-template-columns: 1fr; }
-      .info-strip { grid-template-columns: 1fr; }
-      .info-card { min-height: 0; }
-      .option { padding: 14px; }
-      #prize-box { font-size: 1.08rem; padding: 14px; }
-    }
-
-    @media (max-width: 420px) {
-      body { padding: 8px; }
-      .quiz-card { padding: 10px; }
-      .photo-container img { height: 190px; }
-      #q-title { padding: 54px 14px 14px; }
-      #q-title::before {
-        top: 12px;
-        left: 14px;
-        transform: rotate(-6deg);
-      }
-      h1 { font-size: 1.25rem !important; }
-      .author-badge,
-      .author-details,
-      .research-note,
-      .rule-item,
-      .material-link,
-      .option,
-      .explanation { font-size: 0.9rem; }
-      .warning-tape { padding: 8px 8px 8px 14px; letter-spacing: 0; }
-      .photo-container::after { font-size: 0.72rem; }
-      .chart-container { width: 112px; height: 112px; margin: 12px auto; }
-      .pie-chart::after { width: 78px; height: 78px; }
-      .chart-text { font-size: 1.3rem; }
-      .prize-img { width: min(100%, 180px); }
-      .btn { padding: 13px 18px; font-size: 1rem; }
-    }
-  </style>
+        :root {
+            --primary: #1a2044;
+            --accent: #fceb3b;
+            --success: #8cc63f;
+            --error: #e63946;
+            /* Фон приукрашен паттерном лапок */
+            --bg-color: #fdf6e3;
+            --bg-pattern: radial-gradient(#e9dac1 1px, transparent 1px);
+        }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--bg-color); 
+            background-image: var(--bg-pattern); 
+            background-size: 30px 30px; 
+            margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: var(--primary); padding: 10px; box-sizing: border-box; }
+        .quiz-card { background: white; width: 100%; max-width: 850px; border-radius: 30px; padding: 25px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); text-align: center; }
+        .photo-container { width: 100%; height: 350px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* СТАРТОВЫЙ ЭКРАН */
+        .intro-content { background: #f9f9f9; padding: 25px; border-radius: 25px; margin: 20px 0; border: 1px solid #eee; }
+        .author-badge { font-weight: 700; color: #555; font-size: 0.9rem; margin-top: 10px; display: block;}
+        .rules-list { text-align: left; margin-top: 20px; }
+        .rule-item { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; font-size: 0.95rem; }
+        .rule-num { width: 30px; height: 30px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0; }
+        .warning-tape { background: repeating-linear-gradient(45deg, #fceb3b, #fceb3b 10px, #1a2044 10px, #1a2044 20px); color: white; padding: 15px; font-weight: bold; border-radius: 10px; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px;}
+
+        /* КВИЗ */
+        .options-grid { display: grid; gap: 10px; margin-top: 20px; }
+        .option { background: white; border: 2px solid #eee; padding: 18px; border-radius: 18px; cursor: pointer; text-align: left; transition: 0.3s; font-size: 0.95rem; line-height: 1.5; font-weight: 500;}
+        .option:hover { border-color: var(--primary); background: #f0f4ff; transform: scale(1.01);}
+        .option.correct { background: var(--success) !important; color: white; border-color: var(--success); }
+        .option.wrong { background: var(--error) !important; color: white; border-color: var(--error); opacity: 0.8;}
+        
+        .explanation { display: none; margin-top: 20px; padding: 25px; border-radius: 18px; background: #f0f9f8; border-left: 8px solid var(--primary); text-align: left; line-height: 1.6; font-size: 0.95rem; animation: slideUp 0.5s; }
+        
+        /* ДИАГРАММА */
+        .chart-container { position: relative; width: 180px; height: 180px; margin: 25px auto; transition: transform 0.5s;}
+        .chart-container:hover { transform: scale(1.05); }
+        .pie-chart { width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .pie-chart::after { content: ""; position: absolute; width: 130px; height: 130px; background: white; border-radius: 50%; }
+        .chart-text { position: relative; z-index: 10; font-weight: 900; font-size: 2rem; color: var(--primary);}
+
+        .btn { background: var(--primary); color: white; border: none; padding: 18px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.2rem; margin-top: 25px; transition: 0.3s; box-shadow: 0 10px 20px rgba(26,32,68,0.2);}
+        .btn:hover { background: #2a346e; transform: translateY(-2px); }
+        .hidden { display: none !important; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
 <div class="quiz-card">
-  <div id="intro" class="screen-grid">
-    <div class="photo-container hero-photo" data-caption="Лея, главный эксперт"><img id="main-img" src="leya-belarusian.jpg" alt="Лея"></div>
-    <div class="content-panel">
-      <h1 style="font-weight: 900; font-size: 2rem; margin: 0 0 5px;">ИГРА: «ПОЗИТИВНО ПОДКРЕПИСЬ»</h1>
-      <span class="author-badge">Автор исследовательской работы и викторины: Янусов Дима</span>
-      <span class="author-details">учащийся 4 "Г" класса<br>Гимназии №1 г. Новополоцка</span>
-      <div class="intro-content">
-        <p style="font-size: 1.1rem; font-weight: 600; margin: 0;">Внимательно изучи правила, чтобы не пропустить джекпот!</p>
-        <p class="research-note">
-          Эта викторина сделана по материалам исследовательской работы о позитивном подкреплении, языке тела собак и добром воспитании щенка.
-        </p>
-        <div class="warning-tape"><span>🧀 ГЛАВНЫЙ ПРИЗ: СЫРНЫЙ ДЖЕКПОТ! 🧀</span></div>
-        <div class="info-strip">
-          <div class="info-card"><strong>10</strong><span>вопросов по материалам работы</span></div>
-          <div class="info-card"><strong>7</strong><span>уровней вкусных наград</span></div>
-          <div class="info-card"><strong>100%</strong><span>сырная жменька для знатока</span></div>
-        </div>
-        <div class="rules-list">
-          <div class="rule-item"><div class="rule-num">1</div><div><b>Подготовьтесь:</b> внимательно прочитайте вопрос на экране.</div></div>
-          <div class="rule-item"><div class="rule-num">2</div><div><b>Реагируйте:</b> нажмите на правильный вариант ответа.</div></div>
-          <div class="rule-item"><div class="rule-num">3</div><div><b>Подкрепитесь:</b> получите лакомство за отличный результат!</div></div>
-        </div>
-        <div class="materials-block">
-          <p class="materials-title">Материалы к игре</p>
-          <div class="materials-list">
-            <a class="material-link" href="rules-5.png" target="_blank">
-              Памятка «5 правил»
-              <small>Короткая подсказка по доброму общению с собакой.</small>
-            </a>
-            <a class="material-link locked" href="#" onclick="showConferenceMessage(event)">
-              Презентация исследовательской работы
-              <small>Вот уж нетерпеливые дождитесь сначала конференции.</small>
-            </a>
-            <a class="material-link" href="presentation-quiz-compressed.pptx" target="_blank">
-              Презентация с вопросами для показа
-              <small>Формат PowerPoint для удобного проведения викторины на экране.</small>
-            </a>
-            <a class="material-link" href="prototype-cards.png" target="_blank">
-              Материалы для офлайн-игры
-              <small>Прототип табличек для проведения игры без компьютера.</small>
-            </a>
-          </div>
-        </div>
-      </div>
-      <button class="btn" onclick="startQuiz()">Начать игру! 🚀</button>
-    </div>
-  </div>
+    <div class="photo-container"><img id="main-img" src="Лея белорусочка.jpg" alt="Лея"></div>
 
-  <div id="quiz" class="screen-grid hidden">
-    <div class="photo-container quiz-photo" data-caption="Карточка вопроса"><img id="quiz-img" src="leya-with-decoration.jpg" alt="Лея"></div>
-    <div class="content-panel">
-      <div class="quiz-kicker" id="quiz-kicker">Карточка 1 из 10</div>
-      <h3 id="q-title" style="text-align: left; font-size: 1.15rem; margin: 0 0 14px;"></h3>
-      <div id="options-container" class="options-grid"></div>
-      <div id="expl-box" class="explanation"></div>
-      <button id="next-btn" class="btn hidden">Понятно, дальше! 🐾</button>
+    <div id="intro">
+        <h1 style="font-weight: 900; font-size: 2rem; margin-bottom: 5px;">ИГРА: «ПОЗИТИВНО ПОДКРЕПИСЬ»</h1>
+        <span class="author-badge">Автор: Янусов Дима</span>
+        <div class="intro-content">
+            <p style="font-size: 1.1rem; font-weight: 600;">Внимательно изучи правила, чтобы не пропустить джекпот!</p>
+            <div class="rules-list">
+                <div class="rule-item"><div class="rule-num">1</div><div><b>Подготовьтесь:</b> Внимательно прочитайте вопрос на экране.</div></div>
+                <div class="rule-item"><div class="rule-num">2</div><div><b>Реагируйте:</b> Нажмите на правильный вариант ответа.</div></div>
+                <div class="rule-item"><div class="rule-num">3</div><div><b>Подкрепитесь:</b> Получите лакомство за отличный результат!</div></div>
+            </div>
+        </div>
+        <div class="warning-tape">🧀 ГЛАВНЫЙ ПРИЗ: СЫРНЫЙ ДЖЕКПОТ! 🧀</div>
+        <button class="btn" onclick="startQuiz()">Начать игру! 🚀</button>
     </div>
-  </div>
 
-  <div id="results" class="screen-grid hidden">
-    <div class="photo-container result-photo" data-caption="Финальный снимок"><img id="result-img" src="leya-birthday.jpg" alt="Лея празднует результат"></div>
-    <div class="content-panel">
-      <h1 style="font-size: 2rem; margin: 0;">Викторина окончена! 🎉</h1>
-      <div class="chart-container"><div id="pie" class="pie-chart"><span class="chart-text" id="perc-text">0%</span></div></div>
-      <h2 id="score-summary" style="margin: 8px 0 12px;"></h2>
-      <div id="prize-box"></div>
-      <p id="motivation-text" style="margin-top: 16px; color: #444; font-style: italic; font-size: 1.05rem; line-height: 1.55;"></p>
-      <button class="btn" onclick="location.reload()">Сыграть ещё раз 🔄</button>
+    <div id="quiz" class="hidden">
+        <h3 id="q-title" style="text-align: left; font-size: 1.15rem; margin-bottom: 20px; min-height: 70px;"></h3>
+        <div id="options-container" class="options-grid"></div>
+        <div id="expl-box" class="explanation"></div>
+        <button id="next-btn" class="btn hidden" style="background: var(--success);">Понятно, дальше! 🐾</button>
     </div>
-  </div>
+
+    <div id="results" class="hidden">
+        <h1 style="font-size: 2rem;">Викторина окончена! 🎉</h1>
+        <div class="chart-container"><div id="pie" class="pie-chart"><span class="chart-text" id="perc-text">0%</span></div></div>
+        <h2 id="score-summary" style="margin: 10px 0;"></h2>
+        <div id="prize-box" style="padding: 25px; border: 4px solid var(--accent); border-radius: 20px; background: #fffdf0; font-weight: 800; font-size: 1.4rem;"></div>
+        <p id="motivation-text" style="margin-top: 20px; color: #444; font-style: italic; font-size: 1.05rem; line-height: 1.6;"></p>
+        <button class="btn" onclick="location.reload()">Сыграть ещё раз 🔄</button>
+    </div>
 </div>
 
 <script>
-  const questions = [
-    { q: "1. В чем заключается суть метода позитивного подкрепления в воспитании собаки?", options: ["А. Собаку учат подчиняться только через строгое соблюдение дисциплины.", "Б. Человек доминирует над собакой, показывая, кто в доме «вожак стаи».", "В. Собака получает награду за правильное действие и хочет его повторить.", "Г. Собака выполняет команды, чтобы избежать физического наказания."], correct: 2, explanations: ["Строгая дисциплина без похвалы не мотивирует собаку, а лишь подавляет её инициативу. Собака становится безынициативной и зажатой.", "Теория доминирования, где нужно быть «вожаком стаи», давно признана устаревшей. Она лишь разрушает доверие между вами.", "Именно так! Позитивное подкрепление строит отношения на доверии. Собака хочет повторять нужное действие за награду: лакомство, игру или похвалу.", "Страх наказания — худший мотиватор. Собака может подчиниться, но будет жить в напряжении и стрессе."], img: "leya-with-decoration.jpg" },
-    { q: "2. Что такое «сигналы примирения», открытые Тюрид Ругос?", options: ["А. Звуковые сигналы, которые собака издает во время игры.", "Б. Специальные жесты, которыми собаки показывают дискомфорт или просят пространства.", "В. Признаки того, что собака готова к нападению на другую собаку.", "Г. Команды, которые хозяин дает собаке, чтобы она успокоилась."], correct: 1, explanations: ["Во время игры собаки могут лаять или рычать, но «сигналы примирения» — это тихий язык тела, а не просто звуки для веселья.", "Точно! Сигналы примирения: облизывание носа, отворот головы, зевание — это вежливый язык тела, которым собака сообщает, что ей некомфортно.", "Наоборот! Сигналы примирения нужны именно для того, чтобы предотвратить нападение и показать мирные намерения.", "Это не команды хозяина, а естественный язык самих собак, который людям важно учиться понимать."], img: "leya-noticed-something.jpg" },
-    { q: "3. Почему собака-подросток в возрасте около 6 месяцев может начать «забывать» команды?", options: ["А. У собаки ухудшается слух из-за гормональных изменений.", "Б. Собака теряет интерес к лакомствам и похвале хозяина.", "В. Отдел эмоций в мозге развивается быстрее, чем отдел самоконтроля.", "Г. Собака специально проявляет упрямство, чтобы захватить лидерство."], correct: 2, explanations: ["Слух у собаки остается прекрасным. Проблема кроется в изменениях работы мозга, а не в органах чувств.", "Интерес к лакомствам никуда не пропадает, просто в этот период запахи на улице и другие собаки могут казаться еще интереснее.", "Именно так! Эмоции развиваются быстрее самоконтроля, поэтому собаке-подростку сложно справляться с бурлящими чувствами.", "Собака не строит хитрых планов по захвату власти. Ей просто сложно контролировать импульсы в период взросления."], img: "leya-gamer.jpg" },
-    { q: "4. Какой вред может нанести поводок-рулетка при постоянном использовании?", options: ["А. Она слишком тяжелая для щенка и мешает ему бегать.", "Б. Она не позволяет собаке отходить от хозяина дальше, чем на 1 метр.", "В. Она всегда натянута и тем самым приучает собаку тянуть поводок.", "Г. Ее яркие цвета могут раздражать зрение собаки."], correct: 2, explanations: ["Вес рулетки обычно находится в руке у хозяина. Проблема заключается в самом принципе работы пружинного механизма.", "Напротив, рулетки бывают длиной 5 и даже 8 метров. Но это не отменяет их главного недостатка — постоянного натяжения.", "Верно! Механизм рулетки устроен так, что собаке всегда нужно тянуть трос, чтобы продвинуться вперед.", "Собаки различают цвета иначе, чем люди, и цвет пластикового корпуса рулетки их совершенно не волнует."], img: "funny-leya-walk.jpg" },
-    { q: "5. Почему использование анатомической шлейки в форме буквы Y лучше, чем использование ошейника?", options: ["А. Ошейники предназначены только для очень крупных и агрессивных собак.", "Б. Шлейка автоматически отучает собаку гоняться за птицами.", "В. Она не травмирует шею, горло и позвоночник при рывках.", "Г. Она позволяет собаке бегать намного быстрее, чем в ошейнике."], correct: 2, explanations: ["Ошейник может быть опасен для шеи собаки любого размера. Крупным собакам анатомическая шлейка тоже гораздо полезнее.", "Амуниция не отучает собаку от охотничьего инстинкта автоматически. Для этого нужны тренировки.", "Абсолютно верно! Анатомическая Y-образная шлейка распределяет нагрузку на грудную клетку и не душит собаку.", "Шлейка не является ускорителем. Она просто делает движения собаки более безопасными."], img: "leya-running.jpg" },
-    { q: "6. Если собака после стрессовой ситуации начинает активно отряхиваться, что это означает?", options: ["А. Собака показывает, что она хочет пойти искупаться.", "Б. У собаки начались проблемы с кожей или шерстью.", "В. Это копинг-стратегия, с помощью которой собака сбрасывает напряжение.", "Г. Это признак того, что собака замерзла и пытается согреться."], correct: 2, explanations: ["Отряхивание после испуга не связано с водными процедурами.", "Если собака чешется постоянно — возможно, это аллергия. Но разовое отряхивание после неприятной ситуации — это работа психики.", "Правильно! Отряхивание — естественный способ пережить сильную эмоцию. Собака буквально стряхивает с себя напряжение.", "Собаки могут дрожать от холода, но отряхивание после стресса — это способ успокоить нервную систему."], img: "leya-sleeping.jpg" },
-    { q: "7. Что рекомендуется сделать, если щенок сходил в туалет мимо пеленки?", options: ["А. Строго отругать его и слегка шлепнуть свернутой газетой.", "Б. Лишить собаку лакомств на весь оставшийся день.", "В. Ткнуть щенка носом в лужу, чтобы он понял, где совершил ошибку.", "Г. Игнорировать промах и бурно хвалить только за успех на пеленке."], correct: 3, explanations: ["Наказание шлепком только напугает щенка. Из-за страха он начнет прятать свои «дела».", "Собака живет в моменте и не свяжет лишение вкусняшек вечером со своей лужей, сделанной утром.", "Это вредный миф. Тыканье носом вызывает страх и разрушает контакт.", "В точку! Промахи убираем спокойно, а за успех на пеленке радостно хвалим и даем вкусняшку."], img: "leya-on-pad.jpg" },
-    { q: "8. В чем заключается метод «тренинга с согласия» (RAT-тренинг) при груминге?", options: ["А. Собаку привязывают, чтобы она не могла убежать во время мытья.", "Б. Собаку нужно кормить только после того, как все процедуры закончены.", "В. Грумер должен выполнить всю работу максимально быстро.", "Г. Процесс разбивается на короткие шаги, собаке дают право уйти, если ей неприятно."], correct: 3, explanations: ["Насильственное удерживание вызывает сильную панику и противоположно тренингу с согласия.", "Награждать нужно в процессе, за каждый спокойный и успешный шаг.", "Спешка часто приводит к неосторожным движениям, которые еще больше пугают животное.", "Точно! Когда собака знает, что ее не держат силой, уровень стресса снижается."], img: "leya-overalls.jpg" },
-    { q: "9. Почему опасно наказывать собаку за рычание?", options: ["А. Рычание — это способ собаки показать свою радость от общения.", "Б. Собака может обидеться и перестать есть.", "В. Рычание — это предупреждение; без него собака может укусить сразу.", "Г. Наказание за рычание заставляет собаку рычать еще громче."], correct: 2, explanations: ["Рычание чаще всего означает просьбу увеличить дистанцию и признак сильного дискомфорта.", "Собаки не умеют «обижаться» в человеческом смысле, они пугаются.", "Совершенно верно! Если наказывать за рычание, предупреждение исчезнет, а страх останется.", "Скорее всего, из-за страха перед наказанием собака замолчит, но внутреннее напряжение никуда не уйдет."], img: "leya-and-rat.jpg" },
-    { q: "10. Как правильно реагировать, если собака лает на дверь, «охраняя» дом?", options: ["А. Спокойно подойти, проверить дверь и показать, что вы контролируете ситуацию.", "Б. Громко закричать «Замолчи!», чтобы перекричать лай собаки.", "В. Игнорировать лай, пока собака сама не устанет и не замолчит.", "Г. Запереть собаку в другой комнате в качестве наказания."], correct: 0, explanations: ["Правильно! Спокойно проверив дверь, вы показываете собаке: «Спасибо, я все вижу, ситуация под контролем».", "Для собаки ваш крик может звучать так, будто вы лаете вместе с ней.", "Если собака тревожится из-за звуков, игнорирование не поможет. Ей нужна спокойная помощь человека.", "Изоляция не объяснит собаке, что звуки за дверью не опасны, а только добавит стресс."], img: "leya-village-hill.jpg" }
-  ];
-
-  const resultTiers = [
-    { min: 0, max: 0, img: "leya-belarusian.jpg", prize: "Без награды... пока!", prizeImg: "", prizeAlt: "", text: "«Я сделаю вид, что ничего не было. Такое бывает! Нажимай “Сыграть ещё раз” и попробуй забрать хотя бы корминку.»" },
-    { min: 1, max: 9, img: "leya-belarusian.jpg", prize: "🎁 Награда: Похвала!", prizeImg: "reward-praise.png", prizeAlt: "Похвала", text: "«Вот уже лучше! Пока сыра не чувствую, но попытка засчитана. Попробуй ещё раз — корминка уже где-то рядом.»" },
-    { min: 10, max: 29, img: "leya-noticed-something.jpg", prize: "🎁 Награда: Корминка! 🦴", prizeImg: "reward-kibble.png", prizeAlt: "Корминка", text: "«Уже лучше, человек! Лови заслуженную корминку. Ты на правильном пути к пониманию пушистых. Хвост Леи одобрительно виляет!»" },
-    { min: 30, max: 49, img: "leya-running.jpg", prize: "🎁 Награда: Утиная нарезка! 🦆", prizeImg: "reward-duck-slices.png", prizeAlt: "Утиная нарезка", text: "«Вуф! Хороший результат! Ты начинаешь считывать сигналы примирения. Утиная нарезка — отличный стимул двигаться дальше!»" },
-    { min: 50, max: 69, img: "leya-birthday.jpg", prize: "🎁 Награда: Куриные колечки! 🐔", prizeImg: "reward-chicken-rings.png", prizeAlt: "Куриные колечки", text: "«Отлично! Мой пушистый радар показывает, что ты почти эксперт. Забирай свои куриные колечки!»" },
-    { min: 70, max: 89, img: "leya-village-hill.jpg", prize: "🎁 Награда: Лососевые облачка! 🐟☁️", prizeImg: "reward-salmon-clouds.png", prizeAlt: "Лососевые облачка", text: "«Вау! Потрясающе! Ты почти профи в психологии собак и считывании сигналов примирения. Лосось — твой!»" },
-    { min: 90, max: 99, img: "leya-village-hill.jpg", prize: "🎁 Награда: Кусочек сыра! 🧀", prizeImg: "reward-cheese-piece.png", prizeAlt: "Кусочек сыра", text: "«Восхитительно! Ты почти идеал. До абсолютного сырного джекпота не хватило совсем чуть-чуть!»" },
-    { min: 100, max: 100, img: "leya-village-hill.jpg", prize: "🏆🏆 ДЖЕКПОТ: СЫРНАЯ ЖМЕНЬКА! 🧀🧀🧀🏆🏆", prizeImg: "reward-cheese-jackpot.png", prizeAlt: "Горка сыра", text: "«АБСОЛЮТНАЯ ПОБЕДА! Ты точно знаешь, как сделать собаку счастливой и послушной. Дима Янусов подтверждает: ты — ТОП!»" }
-  ];
-
-  let current = 0;
-  let score = 0;
-  const quizImg = document.getElementById('quiz-img');
-  const resultImg = document.getElementById('result-img');
-  const quizKicker = document.getElementById('quiz-kicker');
-
-  function preloadImages() {
-    const imageSources = [
-      ...questions.map((question) => question.img),
-      ...resultTiers.map((tier) => tier.img),
-      ...resultTiers.map((tier) => tier.prizeImg).filter(Boolean),
-      "leya-belarusian.jpg"
+    // ТОЧНЫЙ ТЕКСТ ВСЕХ 10 ВОПРОСОВ ИЗ PDF
+    const questions = [
+        {
+            q: "1. В чем заключается суть метода позитивного подкрепления в воспитании собаки?",
+            options: [
+                "А. Собаку учат подчиняться только через строгое соблюдение дисциплины.",
+                "Б. Человек доминирует над собакой, показывая, кто в доме «вожак стаи».",
+                "В. Собака получает награду за правильное действие и хочет его повторить.",
+                "Г. Собака выполняет команды, чтобы избежать физического наказания."
+            ],
+            correct: 2,
+            explanations: [
+                "Строгая дисциплина без похвалы не мотивирует собаку, а лишь подавляет её инициативу. Собака становится безынициативной и зажатой.",
+                "Теория доминирования (где нужно быть «вожаком стаи») давно признана устаревшей и антинаучной. Она лишь разрушает доверие между вами.",
+                "Именно так! Позитивное подкрепление строит отношения на доверии. Собака хочет повторять нужное действие за награду (лакомство, игру, похвалу).",
+                "Страх наказания — это худший мотиватор. Собака действительно может подчиниться, но она будет жить в постоянном напряжении и стрессе."
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "2. Что такое «сигналы примирения», открытые Тюрид Ругос?",
+            options: [
+                "А. Звуковые сигналы, которые собака издает во время игры.",
+                "Б. Специальные жесты, которыми собаки показывают дискомфорт или просят пространства.",
+                "В. Признаки того, что собака готова к нападению на другую собаку.",
+                "Г. Команды, которые хозяин дает собаке, чтобы она успокоилась."
+            ],
+            correct: 1,
+            explanations: [
+                "Во время игры собаки могут лаять или рычать, но «сигналы примирения» — это тихий язык тела, а не просто звуки для веселья.",
+                "Точно! Сигналы примирения (облизывание носа, отворот головы, зевание) — это вежливый язык тела, которым собака сообщает, что ей некомфортно и она хочет избежать конфликта.",
+                "Наоборот! Сигналы примирения созданы природой именно для того, чтобы *предотвратить* нападение и показать мирные намерения.",
+                "Это не команды хозяина, а естественный врожденный язык самих собак, который мы, люди, должны учиться понимать."
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "3. Почему собака-подросток в возрасте около 6 месяцев может начать «забывать» команды?",
+            options: [
+                "А. У собаки ухудшается слух из-за гормональных изменений.",
+                "Б. Собака теряет интерес к лакомствам и похвале хозяина.",
+                "В. Отдел эмоций в мозге развивается быстрее, чем отдел самоконтроля.",
+                "Г. Собака специально проявляет упрямство, чтобы захватить лидерство."
+            ],
+            correct: 2,
+            explanations: [
+                "Слух у собаки остается прекрасным. Проблема кроется в изменениях работы мозга, а не в органах чувств.",
+                "Интерес к лакомствам никуда не пропадает, просто в этот период запахи на улице и другие собаки могут казаться ей еще более интересными.",
+                "Именно так! В мозге собаки полосатое тело (эмоции) развивается быстрее, чем префронтальная кора (самоконтроль). Ей банально сложно справляться с бурлящими чувствами.",
+                "Собака не строит хитрых планов по захвату власти в семье. Ей просто очень сложно контролировать свои импульсы в период взросления."
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "4. Какой вред может нанести поводок-рулетка при постоянном использовании?",
+            options: [
+                "А. Она слишком тяжелая для щенка и мешает ему бегать.",
+                "Б. Она не позволяет собаке отходить от хозяина дальше, чем на 1 метр.",
+                "В. Она всегда натянута и тем самым приучает собаку тянуть поводок.",
+                "Г. Ее яркие цвета могут раздражать зрение собаки."
+            ],
+            correct: 2,
+            explanations: [
+                "Вес рулетки обычно находится в руке у хозяина, проблема заключается в самом принципе работы пружинного механизма.",
+                "Напротив, рулетки бывают длиной 5 и даже 8 метров. Но это не отменяет их главного недостатка — постоянного натяжения.",
+                "Верно! Механизм рулетки устроен так, что собаке всегда нужно тянуть трос, чтобы продвинуться вперед. К тому же, рывки за шею при фиксации кнопки причиняют боль.",
+                "Собаки различают цвета иначе, чем люди, и цвет пластикового корпуса рулетки их совершенно не волнует."
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "5. Почему использование анатомической шлейки в форме буквы Y лучше, чем использование ошейника?",
+            options: [
+                "А. Ошейники предназначены только для очень крупных и агрессивных собак.",
+                "Б. Шлейка автоматически отучает собаку гоняться за птицами.",
+                "В. Она не травмирует шею, горло и позвоночник при рывках.",
+                "Г. Она позволяет собаке бегать намного быстрее, чем в ошейнике."
+            ],
+            correct: 2,
+            explanations: [
+                "Ошейник может быть опасен для шеи собаки любого размера. Крупным собакам анатомическая шлейка тоже гораздо полезнее.",
+                "Амуниция не отучает собаку от охотничьего инстинкта автоматически. Для этого нужны тренировки выдержки и неподбора.",
+                "Абсолютно верно! В шее находятся жизненно важные сосуды и щитовидная железа. Анатомическая Y-образная шлейка равномерно распределяет нагрузку на грудную клетку и не душит собаку.",
+                "Шлейка не является ускорителем для собаки. Она просто делает ее движения анатомически правильными и безопасными."
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "6. Если собака после стрессовой ситуации начинает активно отряхиваться, что это означает?",
+            options: [
+                "А. Собака показывает, что она хочет пойти искупаться.",
+                "Б. У собаки начались проблемы с кожей или шерстью.",
+                "В. Это копинг-стратегия, с помощью которой собака сбрасывает напряжение.",
+                "Г. Это признак того, что собака замерзла и пытается согреться."
+            ],
+            correct: 2,
+            explanations: [
+                "Отряхивание после того, как собака испугалась (например, громкого звука), не имеет ничего общего с водными процедурами.",
+                "Если собака чешется постоянно — возможно, это аллергия. Но разовое интенсивное отряхивание после неприятной ситуации — это работа психики.",
+                "Правильно! Отряхивание — это естественная собачья «копинг-стратегия» (способ пережить сильную эмоцию). Собака буквально стряхивает с себя напряжение после испуга.",
+                "Собаки действительно могут дрожать от холода, но отряхивание в контексте стресса (например, после ухода от ветеринара) — это способ успокоить нервную систему."
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "7. Что рекомендуется сделать, если щенок сходил в туалет мимо пеленки?",
+            options: [
+                "А. Строго отругать его и слегка шлепнуть свернутой газетой.",
+                "Б. Лишить собаку лакомств на весь оставшийся день.",
+                "В. Ткнуть щенка носом в лужу, чтобы он понял, где совершил ошибку.",
+                "Г. Игнорировать промах и бурно хвалить только за успех на пеленке."
+            ],
+            correct: 3,
+            explanations: [
+                "Наказание шлепком только напугает щенка. Из-за страха перед вами он начнет прятать свои «дела» по углам и за диванами.",
+                "Собака живет в моменте. Она никак не свяжет лишение вкусняшек вечером со своей лужей, сделанной утром.",
+                "Это очень вредный и устаревший миф! Тыканье носом вызывает у щенка только страх и отвращение, разрушая ваш с ним контакт.",
+                "В точку! Позитивный метод работает лучше всего: промахи убираем молча (без лишних эмоций), а за успех на пеленке радостно хвалим и даем вкусняшку!"
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "8. В чем заключается метод «тренинга с согласия» (RAT-тренинг) при груминге?",
+            options: [
+                "А. Собаку привязывают, чтобы она не могла убежать во время мытья.",
+                "Б. Собаку нужно кормить только после того, как все процедуры закончены.",
+                "В. Грумер должен выполнить всю работу максимально быстро.",
+                "Г. Процесс разбивается на короткие шаги, собаке дают право уйти, если ей неприятно."
+            ],
+            correct: 3,
+            explanations: [
+                "Насильственное удерживание и привязывание вызывает сильнейшую панику у собаки. Это прямая противоположность тренингу с согласия.",
+                "Награждать нужно в процессе! Если собака терпит страшную для нее процедуру, ее нужно подкреплять маленькими кусочками за каждый успешный шаг.",
+                "Спешка при стрижке когтей или мытье часто приводит к неосторожным движениям, которые еще больше пугают животное.",
+                "Точно! Когда собака знает, что ее не держат силой и она в любой момент может уйти на свою лежанку (безопасное место), ее уровень стресса снижается, и она чаще сама возвращается."
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "9. Почему опасно наказывать собаку за рычание?",
+            options: [
+                "А. Рычание — это способ собаки показать свою радость от общения.",
+                "Б. Собака может обидеться и перестать есть.",
+                "В. Рычание — это предупреждение; без него собака может укусить сразу.",
+                "Г. Наказание за рычание заставляет собаку рычать еще громче."
+            ],
+            correct: 2,
+            explanations: [
+                "Рычание в 99% случаев (если это не игра в перетяжки) — это просьба увеличить дистанцию, признак сильного дискомфорта.",
+                "Собаки не умеют «обижаться» в человеческом смысле, они пугаются. И отказ от еды будет следствием сильного стресса, а не обиды.",
+                "Совершенно верно! Рычание значит: «Мне страшно, пожалуйста, не подходи!». Если наказывать за это, собака перестанет рычать, но страх останется. В следующий раз она просто укусит без предупреждения.",
+                "Скорее всего, из-за страха перед вашим наказанием она как раз замолчит, но ее внутреннее напряжение никуда не уйдет и выльется в агрессию."
+            ],
+            img: "Лея что-то заметила.jpg"
+        },
+        {
+            q: "10. Как правильно реагировать, if собака лает на дверь, «охраняя» дом?",
+            options: [
+                "А. Спокойно подойти, проверить дверь и показать, что вы контролируете ситуацию.",
+                "Б. Громко закричать «Замолчи!», чтобы перекричать лай собаки.",
+                "В. Игнорировать лай, пока собака сама не устанет и не замолчит.",
+                "Г. Запереть собаку в другой комнате в качестве наказания."
+            ],
+            correct: 0,
+            explanations: [
+                "Правильно! Встаньте между собакой и дверью. Спокойно посмотрев на дверь, вы показываете собаке: «Спасибо, я всё вижу, ситуация под моим контролем, охранять больше не нужно».",
+                "Для собаки ваш крик звучит так, будто вы лаете вместе с ней! Это только подогреет ее панику и уверенность, что за дверью опасность.",
+                "Если собака тревожится из-за звуков в подъезде, игнорирование не поможет. Ей нужна помощь вожака (вас), чтобы понять, что всё безопасно.",
+                "Изоляция в другой комнате не объяснит собаке, что звуки за дверью не опасны. Это только добавит стресс от наказания."
+            ],
+            img: "Лея водит машину.jpg"
+        }
     ];
 
-    [...new Set(imageSources)].forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }
+    let current = 0; let score = 0;
+    const mainImg = document.getElementById('main-img');
 
-  function setImage(imageElement, src, alt) {
-    if (imageElement.getAttribute('src') === src) {
-      imageElement.alt = alt;
-      imageElement.classList.remove('loading');
-      return;
+    function startQuiz() {
+        document.getElementById('intro').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        showQuestion();
     }
 
-    imageElement.classList.add('loading');
+    function showQuestion() {
+        const data = questions[current];
+        document.getElementById('q-title').innerText = data.q;
+        mainImg.src = data.img;
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        document.getElementById('expl-box').style.display = 'none';
+        document.getElementById('next-btn').classList.add('hidden');
 
-    const nextImage = new Image();
-    nextImage.onload = () => {
-      imageElement.src = src;
-      imageElement.alt = alt;
-      requestAnimationFrame(() => imageElement.classList.remove('loading'));
+        data.options.forEach((opt, i) => {
+            const btn = document.createElement('div');
+            btn.className = 'option'; btn.innerText = opt;
+            btn.onclick = () => check(i, btn);
+            container.appendChild(btn);
+        });
+    }
+
+    function check(idx, btn) {
+        const data = questions[current];
+        const buttons = document.querySelectorAll('.option-btn, .option'); // Ищем оба типа
+        buttons.forEach(b => b.style.pointerEvents = 'none');
+
+        if (idx === data.correct) {
+            btn.classList.add('correct');
+            score++;
+            mainImg.src = "Лея с Яником.jpg"; 
+        } else {
+            btn.classList.add('wrong');
+            buttons[data.correct].classList.add('correct');
+        }
+
+        const expBox = document.getElementById('expl-box');
+        expBox.innerHTML = `<strong>Объяснение:</strong><br>${data.explanations[idx]}`;
+        expBox.style.display = 'block';
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    document.getElementById('next-btn').onclick = () => {
+        current++;
+        if (current < questions.length) { showQuestion(); } else { showResults(); }
     };
-    nextImage.onerror = () => {
-      imageElement.src = src;
-      imageElement.alt = alt;
-      imageElement.classList.remove('loading');
-    };
-    nextImage.src = src;
-  }
 
-  function showConferenceMessage(event) {
-    event.preventDefault();
-    alert('Вот уж нетерпеливые дождитесь сначала конференции');
-  }
+    // --- ОБНОВЛЕННАЯ СИСТЕМА НАГРАД И ЭМОЦИЙ ---
+    function showResults() {
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('results').classList.remove('hidden');
+        
+        const perc = Math.round((score / questions.length) * 100);
+        const pie = document.getElementById('pie');
+        
+        document.getElementById('perc-text').innerText = perc + '%';
+        // 'Светофорная' диаграмма: Зеленый за правильные, красный за ошибки
+        pie.style.background = `conic-gradient(var(--success) ${perc}%, var(--error) ${perc}%)`;
+        document.getElementById('score-summary').innerHTML = `Ты ответил правильно на <b>${score}</b> из ${questions.length} вопросов!`;
+        
+        const prizeBox = document.getElementById('prize-box');
+        const motiv = document.getElementById('motivation-text');
 
-  function startQuiz() {
-    document.getElementById('intro').classList.add('hidden');
-    document.getElementById('quiz').classList.remove('hidden');
-    showQuestion();
-  }
-
-  function showQuestion() {
-    const data = questions[current];
-    document.getElementById('q-title').innerText = data.q;
-    setImage(quizImg, data.img, `Лея: вопрос ${current + 1}`);
-    quizImg.parentElement.dataset.caption = `Вопрос ${current + 1} / ${questions.length}`;
-    quizKicker.textContent = `Карточка ${current + 1} из ${questions.length}`;
-    const container = document.getElementById('options-container');
-    container.innerHTML = '';
-    document.getElementById('expl-box').style.display = 'none';
-    document.getElementById('next-btn').classList.add('hidden');
-    data.options.forEach((opt, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'option';
-      btn.type = 'button';
-      btn.innerText = opt;
-      btn.onclick = () => check(i, btn);
-      container.appendChild(btn);
-    });
-  }
-
-  function check(idx, btn) {
-    const data = questions[current];
-    const buttons = document.querySelectorAll('.option');
-    buttons.forEach((button) => {
-      button.disabled = true;
-      button.style.pointerEvents = 'none';
-    });
-    if (idx === data.correct) {
-      btn.classList.add('correct');
-      score++;
-    } else {
-      btn.classList.add('wrong');
-      buttons[data.correct].classList.add('correct');
+        // Распределение строго по процентам пользователя
+        if (perc >= 0 && perc <= 10) {
+            mainImg.src = "Лея белорусочка.jpg"; // Серьезная Лея
+            prizeBox.innerText = "🎁 Награда: Похвала!";
+            motiv.innerHTML = "«Гав! Молодец! Дима видит, как ты старался. Я, Лея, тоже вижу старания... но пока не чувствую запаха сыра. Давай поднажмём, в следующий раз жду как минимум корминку!»";
+        } else if (perc >= 11 && perc <= 30) {
+            mainImg.src = "Лея что-то заметила.jpg"; // Заинтересованная Лея
+            prizeBox.innerHTML = "🎁 Награда: Корминка! 🦴";
+            motiv.innerHTML = "«Уже лучше, человек! Лови заслуженную корминку (она только что упала со стола Димы, но какая разница!). Ты на правильном пути к пониманию пушистых. Хвост Леи одобрительно виляет!»";
+        } else if (perc >= 31 && perc <= 50) {
+            mainImg.src = "Лея водит машину.jpg"; // Лея-эксперт в машине
+            prizeBox.innerText = "🎁 Награда: Утиная нарезка!";
+            motiv.innerHTML = "«Вуф! Хороший результат! Ты начинаешь считывать сигналы примирения! Утиная нарезка — неплохой стимул, правда? Ещё немного, и мы станем идеальной стаей!»";
+        } else if (perc >= 51 && perc <= 70) {
+            mainImg.src = "Лея с Яником.jpg"; // Счастливая Лея с другом
+            prizeBox.innerText = "🎁 Награда: Куриные колечки! 🐇";
+            motiv.innerHTML = "«Отлично! Мой пушистый радар показывает, что ты почти эксперт! Знания позитивного подкрепления на высоте. Забирай свои колечки, а Лея пока поиграет с Яником!»";
+        } else if (perc >= 71 && perc <= 90) {
+            mainImg.src = "Лея в деревне на горе .jpg"; // Царственная Лея на горе
+            prizeBox.innerHTML = "🎁 Награда: Лососёвые облачка! 🐟☁️";
+            motiv.innerHTML = "«Вау! Потрясающе! Ты почти профи в психологии собак и считывании сигналов примирения. Дима Янусов гордился бы тобой, а Лея в восторге от твоих знаний! Лосось — твой!»";
+        } else if (perc >= 91 && perc <= 99) {
+            mainImg.src = "Лея в деревне на горе .jpg"; // Топ Лея
+            prizeBox.innerHTML = "🎁 Награда: Кусочек сыра! 🧀";
+            motiv.innerHTML = "«Восхитительно! Ты почти идеал! Сырные кусочки для настоящих экспертов. Мой нос уже чует аромат... До абсолютного сырного джекпота не хватило совсем чуть-чуть! Лея уже готова выполнять твои команды!»";
+        } else if (perc === 100) {
+            mainImg.src = "Лея в деревне на горе .jpg"; // Макс Лея
+            prizeBox.innerHTML = "🏆🏆 ДЖЕКПОТ: СЫРНАЯ ЖМЕНЬКА! 🧀🧀🧀🏆🏆";
+            motiv.innerHTML = "«АБСОЛЮТНАЯ ПОБЕДА! Ты абсолютно точно знаешь, как сделать любую собаку счастливой и послушной! Забирай самую главную награду — жменю сыра. Дима Янусов подтверждает: ты — ТОП! Лея официально признаёт тебя своим вожаком!»";
+        }
     }
-    const expBox = document.getElementById('expl-box');
-    expBox.innerHTML = `<strong>Объяснение:</strong><br>${data.explanations[idx]}`;
-    expBox.style.display = 'block';
-    document.getElementById('next-btn').classList.remove('hidden');
-
-    setTimeout(() => {
-      expBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 120);
-  }
-
-  document.getElementById('next-btn').onclick = () => {
-    current++;
-    if (current < questions.length) {
-      showQuestion();
-    } else {
-      showResults();
-    }
-  };
-
-  function launchJackpotBurst() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const oldBurst = document.querySelector('.jackpot-burst');
-    if (oldBurst) oldBurst.remove();
-
-    const burst = document.createElement('div');
-    burst.className = 'jackpot-burst';
-    document.body.appendChild(burst);
-
-    const colors = ['#f2df61', '#ffffff', '#d9a28b', '#cddfbd', '#8b3d33'];
-    const centers = [
-      { x: 24, y: 22 },
-      { x: 52, y: 18 },
-      { x: 78, y: 28 },
-      { x: 38, y: 52 },
-      { x: 68, y: 58 }
-    ];
-
-    centers.forEach((center, burstIndex) => {
-      for (let i = 0; i < 18; i++) {
-        const spark = document.createElement('span');
-        const angle = (Math.PI * 2 * i) / 18;
-        const distance = 72 + Math.random() * 104;
-        const isCheese = Math.random() > 0.72;
-
-        spark.className = `jackpot-spark${isCheese ? ' cheese' : ''}`;
-        spark.style.left = `${center.x}%`;
-        spark.style.top = `${center.y}%`;
-        spark.style.setProperty('--spark-x', `${Math.cos(angle) * distance}px`);
-        spark.style.setProperty('--spark-y', `${Math.sin(angle) * distance}px`);
-        spark.style.setProperty('--spark-rotate', `${Math.random() * 360 - 180}deg`);
-        spark.style.setProperty('--spark-color', colors[(i + burstIndex) % colors.length]);
-        spark.style.animationDelay = `${burstIndex * 0.18 + Math.random() * 0.08}s`;
-        burst.appendChild(spark);
-      }
-    });
-
-    setTimeout(() => burst.remove(), 2400);
-  }
-
-  function showResults() {
-    document.getElementById('quiz').classList.add('hidden');
-    document.getElementById('results').classList.remove('hidden');
-    const perc = Math.round((score / questions.length) * 100);
-    const pie = document.getElementById('pie');
-    const tier = resultTiers.find((item) => perc >= item.min && perc <= item.max);
-    setImage(resultImg, "leya-birthday.jpg", "Лея празднует результат");
-    document.getElementById('perc-text').innerText = `${perc}%`;
-    pie.style.background = `conic-gradient(var(--success) ${perc}%, var(--error) ${perc}%)`;
-    document.getElementById('score-summary').innerHTML = `Ты ответил правильно на <b>${score}</b> из ${questions.length} вопросов!`;
-    const prizeImage = tier.prizeImg ? `<img class="prize-img" src="${tier.prizeImg}" alt="${tier.prizeAlt}">` : "";
-    document.getElementById('prize-box').innerHTML = `${tier.prize}${prizeImage}`;
-    document.getElementById('motivation-text').innerHTML = tier.text;
-
-    if (perc === 100) {
-      launchJackpotBurst();
-    }
-  }
-
-  preloadImages();
 </script>
 
 </body>
 </html>
-
