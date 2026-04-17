@@ -704,9 +704,9 @@
               Исследовательская работа
               <small>PDF-документ с полным текстом работы.</small>
             </a>
-            <a class="material-link locked" href="#" onclick="showConferenceMessage(event)">
+            <a class="material-link" href="presentation-research.pdf" target="_blank" download>
               Презентация исследовательской работы
-              <small>Вот уж нетерпеливые дождитесь сначала конференции.</small>
+              <small>PDF-версия слайдов для защиты проекта.</small>
             </a>
             <a class="material-link" href="rules-5.png" target="_blank">
               Памятка «5 правил»
@@ -817,11 +817,6 @@
       imageElement.classList.remove('loading');
     };
     nextImage.src = src;
-  }
-
-  function showConferenceMessage(event) {
-    event.preventDefault();
-    alert('Вот уж нетерпеливые дождитесь сначала конференции');
   }
 
   function startQuiz() {
